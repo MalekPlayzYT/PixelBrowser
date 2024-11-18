@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaming Search Hub</title>
+    <style>
+        .stay {
+            border-radius: 10px;  /* Small curve */
+            padding: 10px;        /* Adds space inside */
+            background-color: #302b63; /* Optional background */
+            text-align: center;   /* Optional, to center text inside */
+}
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            position: relative;
+            transition: all 0.3s ease;
+            text-shadow: 
+        -2px -2px 0 black,  
+         2px -2px 0 black,
+        -2px  2px 0 black,
+         2px  2px 0 black; /* Black border effect */
+        }
+
+        /* Top buttons */
+        .top-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .top-btn {
+            background-color: #1f4068;
+            color: #fff;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: background-color 0.3s, transform 0.3s, border-radius 0.3s;
+        }
+
+        .top-btn:hover {
+            background-color: #162447;
+            transform: translateY(-3px);
+        }
+
+        /* Icon for the buttons */
+        .top-btn i {
+            font-size: 24px;
+        }
+
+        /* Main Container */
+        .container {
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Search Bar */
+        .search-bar {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #1f4068;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background-color: #222;
+            color: #fff;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-bar:focus {
+            border-color: #162447;
+        }
+
+        /* Shortcuts */
+        .shortcuts {
+            margin-top: 20px;
+        }
+
+        .shortcut-btn {
+            background-color: #1f4068;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            margin: 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .shortcut-btn:hover {
+            background-color: #162447;
+        }
+
+        /* Modal and Sections */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #1a1a2e;
+            padding: 20px;
+            border-radius: 10px;
+            color: #fff;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .modal-content button {
+            margin-top: 10px;
+            background-color: #1f4068;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .modal-content button:hover {
+            background-color: #162447;
+        }
+
+        /* Background Previews */
+        .background-previews {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .background-preview {
+            width: 45%;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .background-preview img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .background-preview:hover {
+            opacity: 0.8;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Top buttons (Download, News, Background) -->
+    <div class="top-buttons">
+        <button class="top-btn" onclick="showDownloadModal()">
+            <i class="fas fa-download"></i>
+        </button>
+        <button class="top-btn" onclick="showNewsSection()">
+            <i class="fas fa-newspaper"></i>
+        </button>
+        <button class="top-btn" onclick="showBackgroundSection()">
+            <i class="fas fa-image"></i>
+        </button>
+    </div>
+
+    <!-- Points Display -->
+    <div id="pointsDisplay" style="position: absolute; top: 20px; left: 20px; font-size: 20px; color: white; padding: 10px;">Points: 0</div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Welcome to the Gaming Search Hub</h1>
+        <form id="searchForm" action="https://www.google.com/search" method="get" target="_blank">
+            <input type="text" class="search-bar" name="q" placeholder="Search for gaming content...">
+            <button type="submit" class="top-btn" onclick="increasePoints(5)">Search</button>
+        </form>
+
+        <!-- Shortcuts -->
+        <div class="shortcuts">
+            <button class="shortcut-btn" onclick="window.location.href='https://student.nis-blb.com/#/student'">
+                <i class="fas fa-graduation-cap"></i> Student Portal
+            </button>
+            <button class="shortcut-btn" onclick="window.location.href='https://www.youtube.com'">
+                <i class="fas fa-video"></i> YouTube
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal for Download -->
+    <div class="modal" id="downloadModal">
+        <div class="modal-content">
+            <h2>Choose App to Download</h2>
+            <button onclick="downloadApp('gameSetup.exe')">Download on Phone</button>
+            <button onclick="downloadApp('gameUpdate.zip')">Download on PC</button>
+            <button onclick="closeDownloadModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Modal for News -->
+    <div class="modal" id="newsSection">
+        <div class="modal-content">
+            <h2>Gaming News</h2>
+            <p class="stay">
+                Fortnite:
+                New Playstion Exclusive.
+            </p>
+            <p class="stay">
+                Roblox:
+                The End of the Haunt Event.
+            </p>
+            <button onclick="closeNewsSection()">Close</button>
+        </div>
+    </div>
+
+    <!-- Modal for Background Selection -->
+    <div class="modal" id="backgroundSection">
+        <div class="modal-content">
+            <h2>Select Background</h2>
+            <div class="background-previews">
+                <div class="background-preview" onclick="changeBackground('GbVW70DXUAA8o7q.jpg_large')">
+                    <img src="GbVW70DXUAA8o7q.jpg_large" alt="Background 1 Preview">
+                    <p>Background 1</p>
+                </div>
+                <div class="background-preview" onclick="changeBackground('fon.png')">
+                    <img src="fon.png" alt="Background 2 Preview">
+                    <p>Background 2</p>
+                </div>
+            </div>
+            <button onclick="closeBackgroundSection()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Check if a background is saved in localStorage
+        if(localStorage.getItem("background")) {
+            document.body.style.backgroundImage = `url(${localStorage.getItem("background")})`;
+        }
+
+        // Points System
+        let points = localStorage.getItem("points") ? parseInt(localStorage.getItem("points")) : 0;
+
+        // Function to increase points
+        function increasePoints(amount) {
+            points += amount;
+            document.getElementById("pointsDisplay").textContent = `Points: ${points}`;
+            localStorage.setItem("points", points); // Save points in localStorage
+        }
+
+        // Show and close the download modal
+        function showDownloadModal() {
+            document.getElementById('downloadModal').style.display = 'flex';
+            increasePoints(20); // Add points for clicking download
+        }
+
+        function closeDownloadModal() {
+            document.getElementById('downloadModal').style.display = 'none';
+        }
+
+        // Show and close the news section
+        function showNewsSection() {
+            document.getElementById('newsSection').style.display = 'flex';
+            increasePoints(1); // Add points for viewing news
+        }
+
+        function closeNewsSection() {
+            document.getElementById('newsSection').style.display = 'none';
+        }
+
+        // Show and close the background section
+        function showBackgroundSection() {
+            document.getElementById('backgroundSection').style.display = 'flex';
+            increasePoints(1); // Add points for changing background
+        }
+
+        function closeBackgroundSection() {
+            document.getElementById('backgroundSection').style.display = 'none';
+        }
+
+        // Change background image and save it
+        function changeBackground(image) {
+            document.body.style.backgroundImage = `url(${image})`;
+            localStorage.setItem("background", image); // Save the selected background to localStorage
+        }
+
+        // Handle App Download
+        function downloadApp(fileName) {
+            // Trigger the download action here (example with a link)
+            window.location.href = `https://example.com/downloads/${fileName}`;
+            closeDownloadModal();
+        }
+    </script>
+</body>
+</html>

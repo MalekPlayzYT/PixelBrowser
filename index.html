@@ -1,546 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gaming Search Hub</title>
-    <link rel="icon" href="Malek_logo__1_-removebg-preview copy.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        .stay {
-            border-radius: 10px;  /* Small curve */
-            padding: 10px;        /* Adds space inside */
-            background-color: black; /* Optional background */
-            text-align: center;   /* Optional, to center text inside */
-}
-        body {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            color: black;
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        /* Top buttons */
-        .top-buttons {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 15px;
-        }
-
-        .top-btn {
-            background-color: #1f4068;
-            color: #fff;
-            border: none;
-            padding: 15px;
-            cursor: pointer;
-            border-radius: 12px;
-            transition: background-color 0.3s, transform 0.3s, border-radius 0.3s;
-        }
-
-        .top-btn:hover {
-            background-color: #162447;
-            transform: translateY(-3px);
-        }
-
-        /* Icon for the buttons */
-        .top-btn i {
-            font-size: 24px;
-        }
-
-        /* Main Container */
-        .container {
-            text-align: center;
-            animation: fadeIn 1s ease-in-out;
-        }
-        /*-------------------------*/
-
-
-
-/*-----------------*/
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .welcome-page {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid white;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            background-color: #222;
-            color: #fff;
-            outline: none;
-            transition: border-color 0.3s; 
-        }
-
-        .search-bar {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #1f4068;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            background-color: #222;
-            color: #fff;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-/* Container with animated rainbow border and curved corners */
-
-.search-bar {
-    width: 100%;
-    padding: 15px;
-    border: 5px solid transparent;
-    border-radius: 25px;  /* Adjust this to make the corners more curved */
-    background-color: #222;
-    color: #fff;
-    outline: none;
-    margin-bottom: 20px;
-    position: relative;
-    background-color: #222;
-    animation: rainbowBorder 5s linear infinite;
-}
-.welcome-page {
-    width: 100%;
-    padding: 15px;
-    border: 5px solid transparent;
-    border-radius: 25px;  /* Adjust this to make the corners more curved */
-    background-color: #222;
-    color: #fff;
-    outline: none;
-    margin-bottom: 20px;
-    position: relative;
-    background-color: #222;
-    animation: rainbowBorder 5s linear infinite;
-}
-
-/* Keyframes for the animated rainbow border */
-@keyframes colorCycle {
-    0% {
-        border-color: #ff0000;  /* Red */
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Timer</title>
+  <style>
+    /* Styling */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(120deg, #1a1a2e, #16213e, #0f3460);
+      color: #fff;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
     }
-    33% {
-        border-color: #f39c12;  /* Yellow */
+
+    .countdown-container {
+      text-align: center;
+      animation: fadeIn 2s ease-in-out;
     }
-    66% {
-        border-color: #2980b9;  /* Blue */
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      animation: slideDown 1.5s ease-out;
     }
-    100% {
-        border-color: #ff0000;  /* Red (cycle back to red) */
+
+    .timer {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      animation: zoomIn 1.5s ease-in-out;
     }
-}
 
+    .time-block {
+      background: #0f3460;
+      border: 2px solid #e94560;
+      border-radius: 10px;
+      padding: 20px;
+      width: 100px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transform: scale(1);
+      transition: transform 0.3s;
+    }
 
+    .time-block:hover {
+      transform: scale(1.1);
+    }
 
-        .search-bar:focus {
-            border-color: #162447;
-        }
+    .time-block span {
+      font-size: 3rem;
+      font-weight: bold;
+      display: block;
+      animation: pulse 2s infinite;
+    }
 
-        /* Shortcuts */
-        .shortcuts {
-            margin-top: 20px;
-        }
+    .time-block p {
+      font-size: 1rem;
+      margin: 0;
+      color: #e94560;
+    }
 
-        .shortcut-btn {
-            background-color: #1f4068;
-            color: #fff;
-            border: none;
-            padding: 10px 15px;
-            margin: 10px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-        .shortcut-btn:hover {
-            background-color: #162447;
-        }
+    @keyframes slideDown {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
 
-        /* Modal and Sections */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            justify-content: center;
-            align-items: center;
-        }
+    @keyframes zoomIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
 
-        .modal-content {
-            background-color: #1a1a2e;
-            padding: 20px;
-            border-radius: 10px;
-            color: #fff;
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-        }
-
-        .modal-content button {
-            margin-top: 10px;
-            background-color: #1f4068;
-            color: #fff;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .modal-content button:hover {
-            background-color: #162447;
-        }
-
-        /* Background Previews */
-        .background-previews {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        .background-preview {
-            width: 45%;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .background-preview img {
-            width: 100%;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .background-preview:hover {
-            opacity: 0.8;
-        }
-
-        .ban-modal {
-    display: none; /* Hidden by default */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
-    z-index: 9999; /* Make sure it's on top */
-    justify-content: center;
-    align-items: center;
-}
-
-.ban-content {
-    background-color: #222;
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    max-width: 400px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.ban-content h1 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
-
-.ban-content p {
-    font-size: 1.2rem;
-    margin: 10px 0;
-}
-
-.ban-content button {
-    margin-top: 10px;
-    background-color: #1f4068;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.ban-content button:hover {
-    background-color: #162447;
-}
-
-
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+  </style>
 </head>
 <body>
-
-
-    <!-- Top buttons (Download, News, Background) -->
-    <div class="top-buttons">
-        <button class="top-btn" onclick="showDownloadModal()">
-            <i class="fas fa-download"></i>
-        </button>
-        <button class="top-btn" onclick="showNewsSection()">
-            <i class="fas fa-newspaper"></i>
-        </button>
-        <button class="top-btn" onclick="showBackgroundSection()">
-            <i class="fas fa-image"></i>
-        </button>
+  <div class="countdown-container">
+    <h1>Countdown to 21st November 2024</h1>
+    <div class="timer">
+      <div class="time-block">
+        <span id="days">00</span>
+        <p>Days</p>
+      </div>
+      <div class="time-block">
+        <span id="hours">00</span>
+        <p>Hours</p>
+      </div>
+      <div class="time-block">
+        <span id="minutes">00</span>
+        <p>Minutes</p>
+      </div>
+      <div class="time-block">
+        <span id="seconds">00</span>
+        <p>Seconds</p>
+      </div>
     </div>
+  </div>
+  <script>
+    // Countdown Timer
+    const countdown = () => {
+      const targetDate = new Date('November 21, 2024 09:00:00 GMT+2').getTime(); // Egypt Time (GMT+2)
+      const now = new Date().getTime();
+      const difference = targetDate - now;
 
-    <!-- Points Display -->
-    <div id="pointsDisplay" style="position: absolute; top: 20px; left: 20px; font-size: 20px; color: white; padding: 10px;">Points: 0</div>
+      if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-    <!-- Main Content -->
-    <div class="container">
-    <h1 class="welcome-page">Welcome to the Gaming Search Hub</h1>
-        <form id="searchForm" action="https://www.google.com/search" method="get" target="_blank">
-            <input type="text" class="search-bar" name="q" placeholder="Search for gaming content...">
-            <button type="submit" class="top-btn" onclick="increasePoints(0)">Search</button>
-        </form>
+        document.getElementById('days').textContent = days.toString().padStart(2, '0');
+        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+      } else {
+        document.querySelector('.timer').innerHTML = "<h2>Time's Up!</h2>";
+      }
+    };
 
-        <!-- Shortcuts -->
-        <div class="shortcuts">
-            <button class="shortcut-btn" onclick="window.location.href='https://student.nis-blb.com/#/student'">
-                <i class="fas fa-graduation-cap"></i> Student Portal
-            </button>
-            <button class="shortcut-btn" onclick="window.location.href='https://www.youtube.com'">
-                <i class="fas fa-video"></i> YouTube
-            </button>
-        </div>
-    </div>
-
-    <!-- Modal for Download -->
-    <div class="modal" id="downloadModal">
-        <div class="modal-content">
-            <img src="vbucks.webp" alt="Product Image" class="product-image">
-            <h2 class="product-name">V-Bucks</h2>
-            <p class="product-description">This is a wonderful product that will change your life!</p>
-            <button id="buyBtn" class="buy-btn" onclick="buyProduct()">Buy for 100,000 Points</button>
-            <button onclick="closeDownloadModal()">Close</button>
-        </div>
-    </div>
-
-    <!--Model for Ban-->
-    <!-- Ban Modal -->
-<div id="banModal" class="ban-modal">
-    <div class="ban-content">
-        <h1>You Are Banned!</h1>
-        <p>You cannot use the search functionality for <span id="banTimeRemaining"></span> minutes.</p>
-        <p>Please wait or come back later.</p>
-        <button onclick="closeBanModal()">Close</button>
-    </div>
-</div>
-
-    <!-- Modal for News -->
-    <div class="modal" id="newsSection">
-        <div class="modal-content">
-            <h2>Gaming News</h2>
-            <p class="stay">
-                Fortnite:
-                Ice Spiece now cant throw ice at players
-            </p>
-            <p class="stay">
-                Fortnite:
-                You can now follow creators in Fortnite
-            </p>
-            <p class="stay">
-                Fortnite:
-                Fortnite OG Permnatly comes back in Chapter 6.
-            </p>
-            <p class="stay">
-                Roblox:
-                Users under the age 13 cant use the roblox chat, but they can still use the In-Game-Chat.
-            </p>
-            <button onclick="closeNewsSection()">Close</button>
-        </div>
-    </div>
-
-    <!-- Modal for Background Selection -->
-    <div class="modal" id="backgroundSection">
-        <div class="modal-content">
-            <h2>Select Background</h2>
-            <div class="background-previews">
-                <div class="background-preview" onclick="changeBackground('GbVW70DXUAA8o7q.jpg_large')">
-                    <img src="GbVW70DXUAA8o7q.jpg_large" alt="Background 1 Preview">
-                    <p>Fortnite Remix</p>
-                </div>
-                <div class="background-preview" onclick="changeBackground('dayofdoom.png')">
-                    <img src="dayofdoom.png" alt="Background 2 Preview">
-                    <p>Fortnite Day of Doom</p>
-                </div>
-                <div class="background-preview" onclick="changeBackground('spider.png')">
-                    <img src="spider.png" alt="Background 2 Preview">
-                    <p>Spiderman</p>
-                </div>
-                <div class="background-preview" onclick="changeBackground('gween.png')">
-                    <img src="gween.png" alt="Background 2 Preview">
-                    <p>Fortnite Gweenpool</p>
-                </div>
-                <div class="background-preview" onclick="changeBackground('Apex.png')">
-                    <img src="Apex.png" alt="Background 2 Preview">
-                    <p>Apex</p>
-                </div>
-                <div class="background-preview" onclick="changeBackground('sukona.png')">
-                    <img src="sukona.png" alt="Background 2 Preview">
-                    <p>Sukuna</p>
-                </div>
-                <div class="background-preview" onclick="changeBackground('sukona2.png')">
-                    <img src="sukona2.png" alt="Background 2 Preview">
-                    <p>Sukuna 2</p>
-                </div>
-                <div class="background-preview" onclick="changeBackground('darth.png')">
-                    <img src="darth.png" alt="Background 2 Preview">
-                    <p>Roblox</p>
-                </div>
-            </div>
-            <button onclick="closeBackgroundSection()">Close</button>
-        </div>
-    </div>
-
-    <script>
-// Check if a background is saved in localStorage
-if (localStorage.getItem("background")) {
-    document.body.style.backgroundImage = `url(${localStorage.getItem("background")})`;
-}
-
-// Points System
-let points = localStorage.getItem("points") ? parseInt(localStorage.getItem("points")) : 0;
-let clickTimestamps = [];
-let isBanned = false;
-
-// Check for ban status in localStorage
-if (localStorage.getItem("banEndTime")) {
-    const banEndTime = parseInt(localStorage.getItem("banEndTime"));
-    if (Date.now() < banEndTime) {
-        isBanned = true;
-        setBanTimeout(banEndTime);
-    } else {
-        localStorage.removeItem("banEndTime"); // Remove expired ban
-    }
-}
-
-// Update points display
-function updatePointsDisplay() {
-    document.getElementById("pointsDisplay").textContent = `Points: ${points}`;
-    localStorage.setItem("points", points); // Save points in localStorage
-}
-
-// Function to increase points
-function increasePoints(amount) {
-    if (isBanned) {
-        alert(`You are banned! Try again after ${Math.ceil((parseInt(localStorage.getItem("banEndTime")) - Date.now()) / 60000)} minutes.`);
-        return;
-    }
-    points += amount;
-    updatePointsDisplay();
-}
-
-// Function to handle spam protection and banning
-function handleSpamProtection() {
-    const now = Date.now();
-    clickTimestamps = clickTimestamps.filter(ts => now - ts <= 7000); // Keep clicks within the last 7 seconds
-    clickTimestamps.push(now);
-
-    if (clickTimestamps.length > 3) {
-        points = 0; // Reset points
-        updatePointsDisplay();
-        isBanned = true;
-
-        const banEndTime = now + 20 * 60 * 1000; // 20 minutes ban
-        localStorage.setItem("banEndTime", banEndTime); // Save ban end time to localStorage
-        alert("You have been banned for spamming!");
-
-        setBanTimeout(banEndTime);
-    }
-}
-
-// Function to set timeout for ban lifting
-function setBanTimeout(banEndTime) {
-    setTimeout(() => {
-        isBanned = false;
-        localStorage.removeItem("banEndTime");
-        alert("Your ban has been lifted. Please search responsibly.");
-    }, banEndTime - Date.now());
-}
-
-// Function to handle search functionality
-function handleSearch(event) {
-    event.preventDefault();
-    if (isBanned) {
-        alert(`You are banned! Try again after ${Math.ceil((parseInt(localStorage.getItem("banEndTime")) - Date.now()) / 60000)} minutes.`);
-        return;
-    }
-    handleSpamProtection();
-    increasePoints(5);
-    document.getElementById("searchForm").submit(); // Proceed with the search
-}
-
-// Show and close the download modal
-function showDownloadModal() {
-    document.getElementById('downloadModal').style.display = 'flex';
-    increasePoints(0); // Add points for clicking download
-}
-
-function closeDownloadModal() {
-    document.getElementById('downloadModal').style.display = 'none';
-}
-
-// Show and close the news section
-function showNewsSection() {
-    document.getElementById('newsSection').style.display = 'flex';
-    increasePoints(10); // Add points for viewing news
-}
-
-function closeNewsSection() {
-    document.getElementById('newsSection').style.display = 'none';
-}
-
-// Show and close the background section
-function showBackgroundSection() {
-    document.getElementById('backgroundSection').style.display = 'flex';
-    increasePoints(10); // Add points for changing background
-}
-
-function closeBackgroundSection() {
-    document.getElementById('backgroundSection').style.display = 'none';
-}
-
-// Change background image and save it
-function changeBackground(image) {
-    document.body.style.backgroundImage = `url(${image})`;
-    localStorage.setItem("background", image); // Save the selected background to localStorage
-}
-
-// Handle App Download
-function downloadApp(fileName) {
-    // Trigger the download action here (example with a link)
-    window.location.href = `https://appsgeyser.com/building/?type=apk&widget_name=Pixel%20Brower_18408530`;
-    closeDownloadModal();
-}
-
-// Event Listeners
-document.getElementById("searchForm").addEventListener("submit", handleSearch);
-
-// Initial points display
-updatePointsDisplay();
-
-//
-
-
-
-
-
-    </script>
+    // Update countdown every second
+    setInterval(countdown, 1000);
+    countdown();
+  </script>
 </body>
 </html>

@@ -7,146 +7,7 @@
   <link rel="icon" href="Malek_logo__1_-removebg-preview copy.png" type="image/x-icon">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif; /* Modern and sleek font */
-    background: linear-gradient(135deg, #1e1e2f, #252945, #191923); /* Subtle gradient */
-    color: #fff; /* Bright text for better contrast */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    flex-direction: column;
-    position: relative;
-    transition: all 0.3s ease;
-}
-
-/* Stay Button */
-.stay {
-    border-radius: 12px; /* Slightly larger curve */
-    padding: 12px 20px;
-    background-color: #1f4068;
-    color: #fff;
-    text-align: center;
-    font-weight: 500;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: transform 0.3s, background-color 0.3s;
-}
-
-.stay:hover {
-    background-color: #162447;
-    transform: translateY(-3px) scale(1.05); /* Subtle lift */
-}
-
-/* Top Buttons Section */
-.top-buttons {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    gap: 20px;
-    justify-content: flex-end;
-}
-
-.top-btn {
-    background-color: #1f4068;
-    color: #fff;
-    border: none;
-    padding: 12px 20px;
-    cursor: pointer;
-    border-radius: 12px;
-    font-size: 1rem;
-    transition: background-color 0.3s, transform 0.3s;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.top-btn:hover {
-    background-color: #162447;
-    transform: translateY(-3px);
-}
-
-.top-btn i {
-    font-size: 20px;
-}
-
-/* Main Container */
-.container {
-    text-align: center;
-    animation: fadeIn 1s ease-in-out;
-    width: 100%;
-    max-width: 1000px; /* Increased width */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Fade-in Animation */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-/* Modal Styles */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-.modal-content {
-    background-color: #1a1a2e;
-    padding: 25px;
-    border-radius: 12px;
-    color: #fff;
-    text-align: center;
-    max-width: 500px;
-    width: 100%;
-    font-size: 1rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-}
-
-.modal-content button {
-    margin-top: 15px;
-    background-color: #1f4068;
-    color: #fff;
-    border: none;
-    padding: 12px 20px;
-    cursor: pointer;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: background-color 0.3s;
-}
-
-.modal-content button:hover {
-    background-color: #162447;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /* General Reset */
+    /* General Reset & Background */
     body {
       margin: 0;
       padding: 0;
@@ -226,7 +87,7 @@ body {
     /* Updated (Longer) Search Bar and Button */
     .search-container {
       width: 100%;
-      max-width: 1200px;  /* Increased max-width for a longer search bar */
+      max-width: 1200px;
       margin: 0 auto 20px;
       display: flex;
       align-items: stretch;
@@ -236,7 +97,7 @@ body {
     }
     .search-bar {
       flex: 1;
-      padding: 20px 30px;  /* Increased horizontal padding; vertical padding remains the same */
+      padding: 20px 30px;
       font-size: 1.5rem;
       border: 2px solid #333;
       border-right: none;
@@ -254,7 +115,7 @@ body {
       box-shadow: 0 0 8px rgba(0, 120, 255, 0.5);
     }
     .search-icon-btn {
-      padding: 20px 30px;  /* Matching horizontal padding */
+      padding: 20px 30px;
       border: none;
       background-color: #0078ff;
       color: #fff;
@@ -305,7 +166,7 @@ body {
       transform: translateY(-3px);
     }
 
-    /* Modal Styles (Download, News, Background) */
+    /* Modal Styles (Common for Trade, News, Background) */
     .modal {
       display: none;
       position: fixed;
@@ -342,6 +203,32 @@ body {
     }
     .modal-content button:hover {
       background-color: #162447;
+    }
+
+    /* News Modal (Scrollable News Items with Images) */
+    .news-container {
+      max-height: 300px;
+      overflow-y: auto;
+      margin: 15px 0;
+      text-align: left;
+    }
+    .news-item {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 10px;
+    }
+    .news-item img {
+      width: 100px;
+      height: auto;
+      border-radius: 8px;
+    }
+    .news-item p {
+      flex: 1;
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.4;
     }
 
     /* Background Previews (Wallpaper Shop) */
@@ -417,19 +304,48 @@ body {
       transform: scale(1.05);
       opacity: 0.9;
     }
+
+    /* Trade Modal Styles */
+    .trade-modal-content {
+      background-color: #1a1a2e;
+      padding: 25px;
+      border-radius: 12px;
+      color: #fff;
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+      font-size: 1rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+    .trade-modal-content h2 {
+      margin-top: 0;
+    }
+    .trade-section {
+      text-align: left;
+      margin: 15px 0;
+    }
+    .trade-section h3 {
+      margin-bottom: 10px;
+    }
+    .trade-section select, .trade-section button {
+      padding: 8px;
+      font-size: 1rem;
+      margin: 5px 0;
+    }
   </style>
 </head>
 <body>
-  <!-- Top Buttons (Download, News, Background) -->
+  <!-- Top Buttons (Trade, News, Background) -->
   <div class="top-buttons">
-    <button class="top-btn" onclick="showDownloadModal()">
-      <i class="fas fa-download"></i>
+    <!-- Trade Button (replaces Download) -->
+    <button class="top-btn" onclick="showTradeModal()">
+      <i class="fas fa-exchange-alt"></i> Trade
     </button>
     <button class="top-btn" onclick="showNewsSection()">
-      <i class="fas fa-newspaper"></i>
+      <i class="fas fa-newspaper"></i> News
     </button>
     <button class="top-btn" onclick="showBackgroundSection()">
-      <i class="fas fa-image"></i>
+      <i class="fas fa-image"></i> Shop
     </button>
   </div>
 
@@ -464,67 +380,96 @@ body {
     </div>
   </div>
 
-  <!-- Modal for Download -->
-  <div class="modal" id="downloadModal">
-    <div class="modal-content">
-      <img src="vbucks.webp" alt="Product Image" class="product-image">
-      <h2 class="product-name">V-Bucks</h2>
-      <p class="product-description">1,000</p>
-      <button id="buyBtn" class="buy-btn" onclick="buyProduct()">2,000</button>
-      <button onclick="closeDownloadModal()">Close</button>
-    </div>
-  </div>
-
-  <!-- Modal for News -->
+  <!-- Modal for News (Scrollable News Items with Images) -->
   <div class="modal" id="newsSection">
     <div class="modal-content">
-        <h2>Gaming News</h2>
-        <p class="stay">
-            Fortnite:
-            Fortnite are working on converting Skins' "Legacy Shoes" into Kicks Cosmetics that you'll likely get for free with the skin
-        </p>
-        <p class="stay">
-            Playstaion:
-            Playstaion Servers were down for 20H and are now back!
-        </p>
-        <p class="stay">
-            Fortnite:
-            NEW FORTNITE IRON MAN & AVATAR SKINS COMMING SOON!
-        </p>
-        <p class="stay">
-          Fortnite:
-          JUJUTSU KAISEN x FORTNITE IN THE SHOP
-      </p>
-      <p class="stay">
-        GTA:
-        GTA 6 GOT CANCLED TILL FALL 2025
-    </p>
-        <p class="stay">
-            Roblox:
-            Farid now plays roblox for some reason...
-        </p>
-        <p class="stay">
-          Roblox:
-          New Desin for Roblox
-      </p>
-        <button onclick="closeNewsSection()">Close</button>
+      <h2>Gaming News</h2>
+      <div class="news-container">
+        <!-- Example News Items -->
+        <div class="news-item">
+          <img src="news1.jpg" alt="News 1">
+          <p>Fortnite: Skins' "Legacy Shoes" are being converted into free Kicks Cosmetics.</p>
+        </div>
+        <div class="news-item">
+          <img src="news2.jpg" alt="News 2">
+          <p>PlayStation: Servers were down for 20 hours and are now back online!</p>
+        </div>
+        <div class="news-item">
+          <img src="news3.jpg" alt="News 3">
+          <p>Fortnite: New Iron Man & Avatar skins are coming soon!</p>
+        </div>
+        <div class="news-item">
+          <img src="news4.jpg" alt="News 4">
+          <p>Fortnite: JUJUTSU KAISEN x FORTNITE collaboration in the shop!</p>
+        </div>
+        <div class="news-item">
+          <img src="news5.jpg" alt="News 5">
+          <p>GTA: GTA 6 has been canceled until Fall 2025.</p>
+        </div>
+        <div class="news-item">
+          <img src="news6.jpg" alt="News 6">
+          <p>Roblox: Farid now plays Roblox for some reason...</p>
+        </div>
+        <div class="news-item">
+          <img src="news7.jpg" alt="News 7">
+          <p>Roblox: A new design for Roblox has been released.</p>
+        </div>
+      </div>
+      <button onclick="closeNewsSection()">Close</button>
     </div>
-</div>
+  </div>
 
   <!-- Modal for Background (Wallpaper Shop) -->
   <div class="modal" id="backgroundSection">
     <div class="modal-content">
       <h2>Background Shop</h2>
-      <!-- Wallpaper Shop Previews (Scrollable) -->
       <div class="background-previews"></div>
       <h3>Owned Wallpapers</h3>
-      <!-- Owned Wallpapers (Scrollable) -->
       <div class="owned-wallpapers"></div>
       <button onclick="closeBackgroundSection()">Close</button>
     </div>
   </div>
 
+  <!-- Modal for Trade -->
+  <div class="modal" id="tradeModal">
+    <div class="trade-modal-content">
+      <h2>Trade Wallpapers</h2>
+      <div id="tradeOffersSection">
+        <h3>Your Trade Offers</h3>
+        <div id="yourTradeOffers"></div>
+      </div>
+      <div id="createTradeSection" class="trade-section">
+        <h3>Create New Trade Offer</h3>
+        <form id="tradeForm">
+          <div>
+            <label for="offerSelect">Offer Wallpaper:</label>
+            <select id="offerSelect" required></select>
+          </div>
+          <div>
+            <label for="requestSelect">Request Wallpaper:</label>
+            <select id="requestSelect" required></select>
+          </div>
+          <button type="submit">Submit Trade Offer</button>
+        </form>
+      </div>
+      <button onclick="closeTradeModal()">Close</button>
+    </div>
+  </div>
+
   <script>
+    /*********************
+     * FIRST VISIT: ASK FOR REAL NAME
+     *********************/
+    if (!localStorage.getItem("realName")) {
+      let realName = prompt("Welcome! Please enter your real name (for trade purposes):");
+      if (realName) {
+        localStorage.setItem("realName", realName);
+      } else {
+        alert("You must enter a name. Please reload the page and try again.");
+      }
+    }
+    const realName = localStorage.getItem("realName");
+
     /*********************
      * POINTS & SEARCH SYSTEM
      *********************/
@@ -639,62 +584,54 @@ body {
     /*********************
      * BACKGROUND (WALLPAPER) SHOP
      *********************/
-     const wallpapersShop = [
-  {
-    id: 1,
-    name: "Fortnite Remix",
-    image: "GbVW70DXUAA8o7q.jpg_large", // Make sure this file is in the same directory as your HTML file
-    cost: 0,
-    requiresCode: false
-  },
-  {
-    id: 2,
-    name: "Fortnite Chapter 6",
-    image: "fnc6.jpeg", // If your image is inside an 'images' folder, include the folder name
-    cost: 0,
-    requiresCode: false
-  },
-  {
-    id: 3,
-    name: "Fortnite Monkey",
-    image: "Someones_Icon_Skin.webp", // Rename to remove spaces if possible
-    cost: null,
-    requiresCode: true,
-    code: "GGP-PPP",
-    realMoneyCost: "$10"
-  },
-  {
-    id: 4,
-    name: "Fortnite OG Season 1",
-    image: "fortniteog1.jpeg",
-    cost: 50,
-    requiresCode: false
-  },
-  {
-    id: 5,
-    name: "Fortnite OG Season 2",
-    image: "fortniteog2.jpeg",
-    cost: 50,
-    requiresCode: false
-  },
-  {
-    id: 6,
-    name: "Fortnite Item Shop",
-    image: "fnis.jpeg",
-    cost: 25,
-    requiresCode: false
-  },
-  {
-    id: 7,
-    name: "Chung Li",
-    image: "chungli.jpeg",
-    cost: null,
-    requiresCode: true,
-    code: "GTD-EWT",
-    realMoneyCost: "$10"
-  },
-];
-
+    const wallpapersShop = [
+      {
+        id: 2,
+        name: "Fortnite Chapter 6",
+        image: "fnc6.png",
+        cost: 0,
+        requiresCode: false
+      },
+      {
+        id: 3,
+        name: "NANA",
+        image: "banana.jpeg",
+        cost: null,
+        requiresCode: true,
+        code: "GGP-PPP",
+        realMoneyCost: "$10"
+      },
+      {
+        id: 4,
+        name: "Fortnite OG Season 1",
+        image: "fortniteog1.jpeg",
+        cost: 50,
+        requiresCode: false
+      },
+      {
+        id: 5,
+        name: "Fortnite OG Season 2",
+        image: "fortniteog2.jpeg",
+        cost: 50,
+        requiresCode: false
+      },
+      {
+        id: 6,
+        name: "Fortnite Item Shop",
+        image: "fnis.png",
+        cost: 25,
+        requiresCode: false
+      },
+      {
+        id: 7,
+        name: "MINI BOX PVP",
+        image: "Beyond.PNG",
+        cost: null,
+        requiresCode: true,
+        code: "TT3-PPP",
+        realMoneyCost: "$10"
+      },
+    ];
 
     let purchasedWallpapers = localStorage.getItem("purchasedWallpapers")
       ? JSON.parse(localStorage.getItem("purchasedWallpapers"))
@@ -806,6 +743,99 @@ body {
       });
     }
 
+    /*********************
+     * TRADE SYSTEM
+     *********************/
+    // We'll store trade offers in localStorage under the key "tradeOffers".
+    // Each trade offer is an object: { id, traderName, offerWallpaperId, requestWallpaperId }
+    function getTradeOffers() {
+      return localStorage.getItem("tradeOffers")
+        ? JSON.parse(localStorage.getItem("tradeOffers"))
+        : [];
+    }
+    function saveTradeOffers(offers) {
+      localStorage.setItem("tradeOffers", JSON.stringify(offers));
+    }
+    function createTradeOffer(offer) {
+      let offers = getTradeOffers();
+      offers.push(offer);
+      saveTradeOffers(offers);
+    }
+    function populateTradeOffers() {
+      const container = document.getElementById("yourTradeOffers");
+      container.innerHTML = "";
+      let offers = getTradeOffers();
+      // Filter for offers created by this user (by realName)
+      offers = offers.filter(o => o.traderName === realName);
+      if (offers.length === 0) {
+        container.innerHTML = "<p>You have no trade offers.</p>";
+        return;
+      }
+      offers.forEach(o => {
+        // Get wallpaper objects from wallpapersShop by id
+        const offerWall = wallpapersShop.find(w => w.id === o.offerWallpaperId);
+        const requestWall = wallpapersShop.find(w => w.id === o.requestWallpaperId);
+        const div = document.createElement("div");
+        div.style.border = "1px solid #333";
+        div.style.marginBottom = "10px";
+        div.style.padding = "5px";
+        div.innerHTML = `<strong>Offer:</strong> ${offerWall ? offerWall.name : "Unknown"}<br>
+                         <strong>Request:</strong> ${requestWall ? requestWall.name : "Unknown"}`;
+        container.appendChild(div);
+      });
+    }
+    function populateTradeFormSelects() {
+      // For the offer dropdown, list wallpapers the user owns.
+      const offerSelect = document.getElementById("offerSelect");
+      const requestSelect = document.getElementById("requestSelect");
+      offerSelect.innerHTML = "";
+      requestSelect.innerHTML = "";
+      wallpapersShop.forEach(w => {
+        if (purchasedWallpapers[w.id]) {
+          const opt = document.createElement("option");
+          opt.value = w.id;
+          opt.textContent = w.name;
+          offerSelect.appendChild(opt);
+        } else {
+          // For the request dropdown, list wallpapers the user does NOT own.
+          const opt = document.createElement("option");
+          opt.value = w.id;
+          opt.textContent = w.name;
+          requestSelect.appendChild(opt);
+        }
+      });
+    }
+    document.getElementById("tradeForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const offerId = parseInt(document.getElementById("offerSelect").value);
+      const requestId = parseInt(document.getElementById("requestSelect").value);
+      if (offerId === requestId) {
+        alert("You cannot trade for the same wallpaper.");
+        return;
+      }
+      const newOffer = {
+        id: Date.now(),
+        traderName: realName,
+        offerWallpaperId: offerId,
+        requestWallpaperId: requestId
+      };
+      createTradeOffer(newOffer);
+      alert("Trade offer created!");
+      populateTradeOffers();
+      // Optionally, reset the form
+      document.getElementById("tradeForm").reset();
+      populateTradeFormSelects();
+    });
+
+    /*********************
+     * MODAL CONTROL FUNCTIONS
+     *********************/
+    function showNewsSection() {
+      document.getElementById("newsSection").style.display = "flex";
+    }
+    function closeNewsSection() {
+      document.getElementById("newsSection").style.display = "none";
+    }
     function showBackgroundSection() {
       populateWallpapersShop();
       populateOwnedWallpapers();
@@ -814,22 +844,19 @@ body {
     function closeBackgroundSection() {
       document.getElementById("backgroundSection").style.display = "none";
     }
+    function showTradeModal() {
+      populateTradeFormSelects();
+      populateTradeOffers();
+      document.getElementById("tradeModal").style.display = "flex";
+    }
+    function closeTradeModal() {
+      document.getElementById("tradeModal").style.display = "none";
+    }
 
     /*********************
-     * OTHER MODAL FUNCTIONS
+     * OTHER MODAL FUNCTIONS (if needed)
      *********************/
-    function showDownloadModal() {
-      document.getElementById("downloadModal").style.display = "flex";
-    }
-    function closeDownloadModal() {
-      document.getElementById("downloadModal").style.display = "none";
-    }
-    function showNewsSection() {
-      document.getElementById("newsSection").style.display = "flex";
-    }
-    function closeNewsSection() {
-      document.getElementById("newsSection").style.display = "none";
-    }
+    // (Download modal is no longer used; you can remove it if desired)
 
     document.getElementById("searchForm").addEventListener("submit", handleSearch);
 

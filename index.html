@@ -5,9 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gaming Search Hub</title>
   <link rel="icon" href="Malek_logo__1_-removebg-preview copy.png" type="image/x-icon">
+  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* General Reset & Background */
+
+
+
+    /* ----------------------------
+       Global Styles & Layout
+    -----------------------------*/
     body {
       margin: 0;
       padding: 0;
@@ -26,8 +32,6 @@
       position: relative;
       transition: all 0.3s ease;
     }
-
-    /* Top Buttons Section */
     .top-buttons {
       position: absolute;
       top: 20px;
@@ -56,8 +60,6 @@
     .top-btn i {
       font-size: 20px;
     }
-
-    /* Points Display */
     #pointsDisplay {
       position: absolute;
       top: 20px;
@@ -68,8 +70,6 @@
       background-color: black;
       opacity: 0.5;
     }
-
-    /* Main Container */
     .container {
       text-align: center;
       animation: fadeIn 1s ease-in-out;
@@ -83,8 +83,9 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
-
-    /* Updated (Longer) Search Bar and Button */
+    /* ----------------------------
+       Search Bar
+    -----------------------------*/
     .search-container {
       width: 100%;
       max-width: 1200px;
@@ -128,8 +129,9 @@
       background-color: #0056cc;
       transform: scale(1.05);
     }
-
-    /* Welcome Section */
+    /* ----------------------------
+       Welcome & Shortcuts
+    -----------------------------*/
     .welcome-page {
       width: 100%;
       max-width: 600px;
@@ -142,8 +144,6 @@
       text-align: center;
       font-size: 1.4rem;
     }
-
-    /* Shortcut Buttons */
     .shortcuts {
       display: flex;
       flex-wrap: wrap;
@@ -165,8 +165,9 @@
       background-color: #162447;
       transform: translateY(-3px);
     }
-
-    /* Modal Styles (Common for Trade, News, Background) */
+    /* ----------------------------
+       Common Modal Styles
+    -----------------------------*/
     .modal {
       display: none;
       position: fixed;
@@ -204,8 +205,9 @@
     .modal-content button:hover {
       background-color: #162447;
     }
-
-    /* News Modal (Scrollable News Items with Images) */
+    /* ----------------------------
+       News Modal Styles
+    -----------------------------*/
     .news-container {
       max-height: 300px;
       overflow-y: auto;
@@ -230,9 +232,10 @@
       font-size: 1rem;
       line-height: 1.4;
     }
-
-    /* Background Previews (Wallpaper Shop) */
-    .background-previews {
+    /* ----------------------------
+       Wallpaper Shop Styles (Retained)
+    -----------------------------*/
+    .background-previews, .owned-wallpapers {
       display: flex;
       flex-wrap: wrap;
       gap: 15px;
@@ -240,7 +243,7 @@
       max-height: 300px;
       overflow-y: auto;
     }
-    .background-preview {
+    .background-preview, .owned-wallpaper {
       width: 45%;
       border-radius: 12px;
       overflow: hidden;
@@ -250,13 +253,13 @@
       padding: 5px;
       text-align: center;
     }
-    .background-preview img {
+    .background-preview img, .owned-wallpaper img {
       width: 100%;
       height: 120px;
       object-fit: contain;
       border-radius: 12px;
     }
-    .background-preview p {
+    .background-preview p, .owned-wallpaper p {
       margin: 5px 0 0;
       font-size: 0.9rem;
     }
@@ -266,86 +269,77 @@
       margin-top: 3px;
       color: #ccc;
     }
-    .background-preview:hover {
+    .background-preview:hover, .owned-wallpaper:hover {
       transform: scale(1.05);
       opacity: 0.9;
     }
-
-    /* Owned Wallpapers Section */
-    .owned-wallpapers {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-bottom: 15px;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-    .owned-wallpaper {
-      width: 45%;
-      border-radius: 12px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.3s, opacity 0.3s;
-      background-color: #222;
-      padding: 5px;
-      text-align: center;
-    }
-    .owned-wallpaper img {
-      width: 100%;
-      height: 120px;
-      object-fit: contain;
-      border-radius: 12px;
-    }
-    .owned-wallpaper p {
-      margin: 5px 0 0;
-      font-size: 0.9rem;
-    }
-    .owned-wallpaper:hover {
-      transform: scale(1.05);
-      opacity: 0.9;
-    }
-
-    /* Trade Modal Styles */
-    .trade-modal-content {
+    /* ----------------------------
+       Game Launcher Modal Styles
+    -----------------------------*/
+    .game-modal-content {
       background-color: #1a1a2e;
       padding: 25px;
       border-radius: 12px;
       color: #fff;
-      text-align: center;
+      text-align: left;
       max-width: 600px;
       width: 100%;
       font-size: 1rem;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     }
-    .trade-modal-content h2 {
-      margin-top: 0;
+    .game-item {
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
-    .trade-section {
-      text-align: left;
-      margin: 15px 0;
+    .game-item h3 {
+      margin: 0;
     }
-    .trade-section h3 {
-      margin-bottom: 10px;
+    .progress-bar-container {
+      width: 100%;
+      background-color: #333;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 8px;
     }
-    .trade-section select, .trade-section button {
+    .progress-bar {
+      height: 10px;
+      background-color: #0078ff;
+      width: 0%;
+      transition: width 0.3s;
+    }
+    .game-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    .game-buttons button {
+      flex: 1;
       padding: 8px;
-      font-size: 1rem;
-      margin: 5px 0;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .game-buttons button:hover {
+      background-color: #162447;
     }
   </style>
 </head>
 <body>
-  <!-- Top Buttons (Trade, News, Background) -->
+  <!-- Top Buttons (Launcher, News, Background) -->
   <div class="top-buttons">
-    <!-- Trade Button (replaces Download) -->
-    <button class="top-btn" onclick="showTradeModal()">
-      <i class="fas fa-exchange-alt"></i> Trade
+    <button class="top-btn" onclick="showGameLauncherModal()">
+      <i class="fas fa-gamepad"></i> Launcher
     </button>
     <button class="top-btn" onclick="showNewsSection()">
       <i class="fas fa-newspaper"></i> News
     </button>
     <button class="top-btn" onclick="showBackgroundSection()">
-      <i class="fas fa-image"></i> Shop
+      <i class="fas fa-image"></i> Background
     </button>
   </div>
 
@@ -380,12 +374,11 @@
     </div>
   </div>
 
-  <!-- Modal for News (Scrollable News Items with Images) -->
+  <!-- Modal for News -->
   <div class="modal" id="newsSection">
     <div class="modal-content">
       <h2>Gaming News</h2>
       <div class="news-container">
-        <!-- Example News Items -->
         <div class="news-item">
           <img src="news1.jpg" alt="News 1">
           <p>Fortnite: Skins' "Legacy Shoes" are being converted into free Kicks Cosmetics.</p>
@@ -430,31 +423,14 @@
     </div>
   </div>
 
-  <!-- Modal for Trade -->
-  <div class="modal" id="tradeModal">
-    <div class="trade-modal-content">
-      <h2>Trade Wallpapers</h2>
-      <div id="tradeOffersSection">
-        <h3>Your Trade Offers</h3>
-        <div id="yourTradeOffers"></div>
-      </div>
-      <div id="createTradeSection" class="trade-section">
-        <h3>Create New Trade Offer</h3>
-        <form id="tradeForm">
-          <div>
-            <label for="offerSelect">Offer Wallpaper:</label>
-            <select id="offerSelect" required></select>
-          </div>
-          <div>
-            <label for="requestSelect">Request Wallpaper:</label>
-            <select id="requestSelect" required></select>
-          </div>
-          <button type="submit">Submit Trade Offer</button>
-        </form>
-      </div>
-      <button onclick="closeTradeModal()">Close</button>
+  <!-- Modal for Game Launcher 
+  <div class="modal" id="gameLauncherModal">
+    <div class="game-modal-content">
+      <h2>Game Launcher</h2>
+      <div id="gameList"></div>
+      <button onclick="closeGameLauncherModal()">Close</button>
     </div>
-  </div>
+  </div>-->
 
   <script>
     /*********************
@@ -479,8 +455,7 @@
       document.getElementById("pointsDisplay").textContent = `Points: ${points}`;
       localStorage.setItem("points", points);
     }
-
-    // Spam Protection, Hourly Limit, and Captcha
+    // (Spam protection and captcha functions retained as in your code)
     let searchTimestamps = localStorage.getItem("searchTimestamps") ? JSON.parse(localStorage.getItem("searchTimestamps")) : [];
     let hourlySearchCount = localStorage.getItem("hourlySearchCount") ? parseInt(localStorage.getItem("hourlySearchCount")) : 0;
     let lastHour = localStorage.getItem("lastHour") ? parseInt(localStorage.getItem("lastHour")) : 0;
@@ -488,7 +463,6 @@
     let lastSearchTime = localStorage.getItem("lastSearchTime") ? parseInt(localStorage.getItem("lastSearchTime")) : 0;
     let isBanned = localStorage.getItem("isBanned") === "true";
     let banEndTime = localStorage.getItem("banEndTime") ? parseInt(localStorage.getItem("banEndTime")) : null;
-
     if (banEndTime && Date.now() < banEndTime) {
       isBanned = true;
       setBanTimeout(banEndTime);
@@ -496,7 +470,6 @@
       localStorage.removeItem("banEndTime");
       isBanned = false;
     }
-
     function setBanTimeout(banEndTime) {
       const remainingTime = banEndTime - Date.now();
       setTimeout(() => {
@@ -505,7 +478,6 @@
         alert("Your ban has been lifted. Please search responsibly.");
       }, remainingTime);
     }
-
     function handleSpamProtection() {
       const now = Date.now();
       const timeFrame = 75 * 1000;
@@ -536,7 +508,6 @@
       localStorage.setItem("hourlySearchCount", hourlySearchCount);
       return true;
     }
-
     function checkCaptcha() {
       if (captchaCount >= 7) {
         const userInput = prompt("Please solve this captcha: What is 5 + 3?");
@@ -549,7 +520,6 @@
       captchaCount++;
       return true;
     }
-
     function handleSearch(event) {
       event.preventDefault();
       const now = Date.now();
@@ -573,16 +543,177 @@
       increasePoints();
       document.getElementById("searchForm").submit();
     }
-
     function increasePoints() {
       const randomPoints = Math.floor(Math.random() * 5) + 1;
       points += randomPoints;
       updatePointsDisplay();
       alert(`You earned ${randomPoints} points!`);
     }
-
     /*********************
-     * BACKGROUND (WALLPAPER) SHOP
+     * GAME LAUNCHER SYSTEM
+     *********************/
+    // Define games with additional properties:
+    let games = localStorage.getItem("games")
+      ? JSON.parse(localStorage.getItem("games"))
+      : [
+          {
+            id: 5,
+            name: "Space Battle",
+            downloadSize: 1500,   // MB
+            updateSize: 200,      // MB
+            state: "not_installed",  // possible values: not_installed, downloading, installed, updating
+            version: "1.0",
+            progress: 0,
+            saveData: ""
+          },
+          {
+            id: 2,
+            name: "Racing Thunder",
+            downloadSize: 2000,
+            updateSize: 250,
+            state: "not_installed",
+            version: "1.0",
+            progress: 0,
+            saveData: ""
+          },
+          {
+            id: 3,
+            name: "Mystery Quest",
+            downloadSize: 1000,
+            updateSize: 150,
+            state: "not_installed",
+            version: "1.0",
+            progress: 0,
+            saveData: ""
+          }
+        ];
+    localStorage.setItem("games", JSON.stringify(games));
+    function saveGames() {
+      localStorage.setItem("games", JSON.stringify(games));
+    }
+    // Render games as cards in the launcher modal.
+    function renderGames() {
+      const container = document.getElementById("gameList");
+      container.innerHTML = "";
+      games.forEach(game => {
+        const gameDiv = document.createElement("div");
+        gameDiv.className = "game-item";
+        let statusText = "";
+        if (game.state === "not_installed") {
+          statusText = "Not Installed";
+        } else if (game.state === "downloading") {
+          statusText = "Downloading...";
+        } else if (game.state === "installed") {
+          statusText = "Installed";
+        } else if (game.state === "updating") {
+          statusText = "Updating...";
+        }
+        gameDiv.innerHTML = `<h3>${game.name}</h3>
+          <p>Download Size: ${game.downloadSize} MB</p>
+          <p>Update Size: ${game.updateSize} MB</p>
+          <p>Version: ${game.version}</p>
+          <p>Status: ${statusText}</p>`;
+        // If the game is downloading/updating, show a progress bar.
+        if (game.state === "downloading" || game.state === "updating") {
+          const progressContainer = document.createElement("div");
+          progressContainer.className = "progress-bar-container";
+          const progressBar = document.createElement("div");
+          progressBar.className = "progress-bar";
+          progressBar.style.width = game.progress + "%";
+          progressContainer.appendChild(progressBar);
+          gameDiv.appendChild(progressContainer);
+        }
+        const btnContainer = document.createElement("div");
+        btnContainer.className = "game-buttons";
+        // Only allow launching if installed and not updating/downloading.
+        if (game.state === "not_installed") {
+          const downloadBtn = document.createElement("button");
+          downloadBtn.textContent = "Download";
+          downloadBtn.onclick = function() { downloadGame(game.id); };
+          btnContainer.appendChild(downloadBtn);
+        } else if (game.state === "installed") {
+          const launchBtn = document.createElement("button");
+          launchBtn.textContent = "Launch";
+          launchBtn.onclick = function() { launchGame(game.id); };
+          btnContainer.appendChild(launchBtn);
+          const updateBtn = document.createElement("button");
+          updateBtn.textContent = "Update";
+          updateBtn.onclick = function() { updateGame(game.id); };
+          btnContainer.appendChild(updateBtn);
+        } else if (game.state === "downloading" || game.state === "updating") {
+          // When updating or downloading, disable buttons.
+          const disabledBtn = document.createElement("button");
+          disabledBtn.textContent = game.state === "downloading" ? "Downloading..." : "Updating...";
+          disabledBtn.disabled = true;
+          btnContainer.appendChild(disabledBtn);
+        }
+        gameDiv.appendChild(btnContainer);
+        container.appendChild(gameDiv);
+      });
+    }
+    // Simulate download progress.
+    function downloadGame(gameId) {
+      let game = games.find(g => g.id === gameId);
+      if (!game) return;
+      game.state = "downloading";
+      game.progress = 0;
+      saveGames();
+      renderGames();
+      const interval = setInterval(() => {
+        game.progress += 10;
+        if (game.progress >= 100) {
+          clearInterval(interval);
+          game.state = "installed";
+          game.progress = 0;
+          saveGames();
+          renderGames();
+        } else {
+          saveGames();
+          renderGames();
+        }
+      }, 200); // every 200ms simulating progress
+    }
+    // Simulate update progress.
+    function updateGame(gameId) {
+      let game = games.find(g => g.id === gameId);
+      if (!game || game.state !== "installed") return;
+      game.state = "updating";
+      game.progress = 0;
+      saveGames();
+      renderGames();
+      const interval = setInterval(() => {
+        game.progress += 10;
+        if (game.progress >= 100) {
+          clearInterval(interval);
+          game.state = "installed";
+          game.progress = 0;
+          // Increment version by 0.1 (for demo purposes)
+          let newVersion = parseFloat(game.version) + 0.1;
+          game.version = newVersion.toFixed(1);
+          saveGames();
+          renderGames();
+        } else {
+          saveGames();
+          renderGames();
+        }
+      }, 150); // every 150ms simulating update progress
+    }
+    // Launch game by redirecting to game.html.
+    function launchGame(gameId) {
+      let game = games.find(g => g.id === gameId);
+      if (!game || game.state !== "installed") return;
+      // Redirect to game.html (this could include query parameters if needed)
+      window.location.href = "game.html";
+    }
+    function showGameLauncherModal() {
+      renderGames();
+      document.getElementById("gameLauncherModal").style.display = "flex";
+    }
+    function closeGameLauncherModal() {
+      document.getElementById("gameLauncherModal").style.display = "none";
+    }
+    /*********************
+     * WALLPAPER SHOP FUNCTIONS (Retained)
      *********************/
     const wallpapersShop = [
       {
@@ -630,9 +761,8 @@
         requiresCode: true,
         code: "TT3-PPP",
         realMoneyCost: "$10"
-      },
+      }
     ];
-
     let purchasedWallpapers = localStorage.getItem("purchasedWallpapers")
       ? JSON.parse(localStorage.getItem("purchasedWallpapers"))
       : {};
@@ -642,17 +772,14 @@
       }
     });
     localStorage.setItem("purchasedWallpapers", JSON.stringify(purchasedWallpapers));
-
     let usedWallpaperCodes = localStorage.getItem("usedWallpaperCodes")
       ? JSON.parse(localStorage.getItem("usedWallpaperCodes"))
       : [];
     localStorage.setItem("usedWallpaperCodes", JSON.stringify(usedWallpaperCodes));
-
     function changeBackground(image) {
       document.body.style.backgroundImage = `url(${image})`;
       localStorage.setItem("background", image);
     }
-
     function handleWallpaperSelection(wallpaper) {
       if (purchasedWallpapers[wallpaper.id]) {
         changeBackground(wallpaper.image);
@@ -693,7 +820,6 @@
         }
       }
     }
-
     function populateWallpapersShop() {
       const container = document.querySelector(".background-previews");
       container.innerHTML = "";
@@ -721,7 +847,6 @@
         container.appendChild(previewDiv);
       });
     }
-
     function populateOwnedWallpapers() {
       const container = document.querySelector(".owned-wallpapers");
       container.innerHTML = "";
@@ -742,91 +867,6 @@
         }
       });
     }
-
-    /*********************
-     * TRADE SYSTEM
-     *********************/
-    // We'll store trade offers in localStorage under the key "tradeOffers".
-    // Each trade offer is an object: { id, traderName, offerWallpaperId, requestWallpaperId }
-    function getTradeOffers() {
-      return localStorage.getItem("tradeOffers")
-        ? JSON.parse(localStorage.getItem("tradeOffers"))
-        : [];
-    }
-    function saveTradeOffers(offers) {
-      localStorage.setItem("tradeOffers", JSON.stringify(offers));
-    }
-    function createTradeOffer(offer) {
-      let offers = getTradeOffers();
-      offers.push(offer);
-      saveTradeOffers(offers);
-    }
-    function populateTradeOffers() {
-      const container = document.getElementById("yourTradeOffers");
-      container.innerHTML = "";
-      let offers = getTradeOffers();
-      // Filter for offers created by this user (by realName)
-      offers = offers.filter(o => o.traderName === realName);
-      if (offers.length === 0) {
-        container.innerHTML = "<p>You have no trade offers.</p>";
-        return;
-      }
-      offers.forEach(o => {
-        // Get wallpaper objects from wallpapersShop by id
-        const offerWall = wallpapersShop.find(w => w.id === o.offerWallpaperId);
-        const requestWall = wallpapersShop.find(w => w.id === o.requestWallpaperId);
-        const div = document.createElement("div");
-        div.style.border = "1px solid #333";
-        div.style.marginBottom = "10px";
-        div.style.padding = "5px";
-        div.innerHTML = `<strong>Offer:</strong> ${offerWall ? offerWall.name : "Unknown"}<br>
-                         <strong>Request:</strong> ${requestWall ? requestWall.name : "Unknown"}`;
-        container.appendChild(div);
-      });
-    }
-    function populateTradeFormSelects() {
-      // For the offer dropdown, list wallpapers the user owns.
-      const offerSelect = document.getElementById("offerSelect");
-      const requestSelect = document.getElementById("requestSelect");
-      offerSelect.innerHTML = "";
-      requestSelect.innerHTML = "";
-      wallpapersShop.forEach(w => {
-        if (purchasedWallpapers[w.id]) {
-          const opt = document.createElement("option");
-          opt.value = w.id;
-          opt.textContent = w.name;
-          offerSelect.appendChild(opt);
-        } else {
-          // For the request dropdown, list wallpapers the user does NOT own.
-          const opt = document.createElement("option");
-          opt.value = w.id;
-          opt.textContent = w.name;
-          requestSelect.appendChild(opt);
-        }
-      });
-    }
-    document.getElementById("tradeForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const offerId = parseInt(document.getElementById("offerSelect").value);
-      const requestId = parseInt(document.getElementById("requestSelect").value);
-      if (offerId === requestId) {
-        alert("You cannot trade for the same wallpaper.");
-        return;
-      }
-      const newOffer = {
-        id: Date.now(),
-        traderName: realName,
-        offerWallpaperId: offerId,
-        requestWallpaperId: requestId
-      };
-      createTradeOffer(newOffer);
-      alert("Trade offer created!");
-      populateTradeOffers();
-      // Optionally, reset the form
-      document.getElementById("tradeForm").reset();
-      populateTradeFormSelects();
-    });
-
     /*********************
      * MODAL CONTROL FUNCTIONS
      *********************/
@@ -844,22 +884,14 @@
     function closeBackgroundSection() {
       document.getElementById("backgroundSection").style.display = "none";
     }
-    function showTradeModal() {
-      populateTradeFormSelects();
-      populateTradeOffers();
-      document.getElementById("tradeModal").style.display = "flex";
+    function showGameLauncherModal() {
+      renderGames();
+      document.getElementById("gameLauncherModal").style.display = "flex";
     }
-    function closeTradeModal() {
-      document.getElementById("tradeModal").style.display = "none";
+    function closeGameLauncherModal() {
+      document.getElementById("gameLauncherModal").style.display = "none";
     }
-
-    /*********************
-     * OTHER MODAL FUNCTIONS (if needed)
-     *********************/
-    // (Download modal is no longer used; you can remove it if desired)
-
     document.getElementById("searchForm").addEventListener("submit", handleSearch);
-
     if (localStorage.getItem("background")) {
       document.body.style.backgroundImage = `url(${localStorage.getItem("background")})`;
     }

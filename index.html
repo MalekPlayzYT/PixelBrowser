@@ -7,334 +7,419 @@
   <link rel="icon" href="Malek_logo__1_-removebg-preview copy.png" type="image/x-icon">
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
+<style>
+  /* Style for the clock container */
+  #clock {
+      position: fixed;      /* Stay fixed on the screen */
+      left: 10px;           /* 10px from the left edge */
+      bottom: 10px;         /* 10px from the bottom edge */
+      background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+      padding: 5px 10px;    /* Some padding */
+      border-radius: 5px;   /* Rounded corners */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+      font-size: 16px;      /* Adjust the size of the clock text */
+      color: #333;          /* Text color */
+    }
+  /* ====================================================
+     Custom Properties for Modern & Blurred Overlays
+  ===================================================== */
+  :root {
+    --bg-gradient: linear-gradient(135deg, #2c3e50, #34495e);
+    --primary: white;
+    --primary-hover: #485059;
+    --secondary: #2c3e50;
+    --text: #ecf0f1;
+    --hover: rgb(54, 54, 54);
+   /* --trans: black;*/
+    /* A solid yet slightly transparent background for containers */
+    --card-bg: rgba(33, 33, 43, 0.9);
+    /* Modal overlay background: semi-transparent with blur */
+    --modal-bg: rgba(91, 91, 91, 0.5);
+    --transition: 0.3s ease;
+    --radius: 12px;
+    --font: 'Roboto', sans-serif;
+    --modal-blur: 10px;
+  }
+
+  /* ----------------------------
+     Global Styles & Layout
+  -----------------------------*/
+  body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font);
+    background: var(--bg-gradient);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    position: relative;
+    transition: all var(--transition);
+  }
+
+  /* ----------------------------
+     Top Buttons & Points Display
+  -----------------------------*/
+  .top-buttons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+  }
+  .top-btn {
+    background-color: var(--secondary);
+    color: var(--text);
+    padding: 10px 16px;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color var(--transition), transform var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .top-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+  }
+  .top-btn i {
+    font-size: 1.2rem;
+  }
+  #pointsDisplay {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 1.2rem;
+    padding: 8px 12px;
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: var(--radius);
+  }
+
+  /* ----------------------------
+     Main Container (Non‑Modal Pages)
+     (News, Game Launcher, Wallpapers, etc.)
+  -----------------------------*/
+  .container {
+    text-align: center;
+    width: 100%;
+    max-width: 960px;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all var(--transition);
+    /* When used as a page (not overlay), a subtle blur can be applied to the background image behind the container */
+    backdrop-filter: blur(4px);
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .container {
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  /* ----------------------------
+     Search Bar
+  -----------------------------*/
+  .search-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background: var(--card-bg);
+  }
+  .search-bar {
+    flex: 1;
+    padding: 14px 20px;
+    font-size: 1.25rem;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--text);
+    transition: color var(--transition);
+  }
+  .search-bar::placeholder {
+    color: #bbb;
+  }
+  .search-bar:focus {
+    color: var(--primary);
+  }
+  .search-icon-btn {
+    padding: 14px 20px;
+    border: none;
+    background-color: var(--trans);
+    color: #fff;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: background-color var(--transition), transform var(--transition);
+  }
+  .search-icon-btn:hover {
+    background-color: var(--hover);
+    transform: scale(1.05);
+  }
+
+  /* ----------------------------
+     Welcome & Shortcuts
+  -----------------------------*/
+  .welcome-page {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    border-radius: var(--radius);
+    background: var(--card-bg);
+    color: var(--text);
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  .shortcuts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .shortcut-btn {
+    background-color: var(--secondary);
+    color: var(--text);
+    padding: 10px 16px;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color var(--transition), transform var(--transition);
+  }
+  .shortcut-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+  }
+
+  /* ----------------------------
+     Modal Overlay & Content
+     (For News, Game Launcher, Wallpapers, etc.)
+  -----------------------------*/
+  .modal {
+    display: none;  /* Shown via JavaScript when needed */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--modal-bg);
+    backdrop-filter: blur(var(--modal-blur));
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: modalFadeIn 0.5s ease forwards;
+  }
+  @keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .modal-content {
+    background: var(--card-bg);
+    padding: 20px 30px;
+    border-radius: var(--radius);
+    color: var(--text);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    animation: modalContentSlideIn 0.4s ease forwards;
+  }
+  @keyframes modalContentSlideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .modal-content button {
+    margin-top: 15px;
+    background-color: var(--secondary);
+    color: var(--text);
+    border: none;
+    padding: 10px 16px;
+    cursor: pointer;
+    border-radius: calc(var(--radius) / 2);
+    font-size: 1rem;
+    transition: background-color var(--transition);
+  }
+  .modal-content button:hover {
+    background-color: var(--primary-hover);
+  }
+
+  /* ----------------------------
+     News Modal Specifics
+  -----------------------------*/
+  .news-container {
+    max-height: 300px;
+    overflow-y: auto;
+    margin: 15px 0;
+    text-align: left;
+  }
+  .news-item {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+  }
+  .news-item img {
+    width: 100px;
+    height: auto;
+    border-radius: var(--radius);
+  }
+  .news-item p {
+    flex: 1;
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  /* ----------------------------
+     Wallpaper Shop Styles
+  -----------------------------*/
+  /* ----------------------------
+   Wallpaper Shop (Horizontal Layout)
+-----------------------------*/
+.background-previews,
+.owned-wallpapers {
+  display: flex;
+  flex-direction: row;         /* Arrange items horizontally */
+  align-items: flex-start;      /* Adjust vertical alignment as needed */
+  gap: 15px;                   /* Space between items */
+  overflow-x: auto;            /* Allow horizontal scrolling */
+  overflow-y: hidden;          /* Hide any vertical overflow */
+  width: 100%;
+  padding: 10px 0;
+}
+
+.background-preview,
+.owned-wallpaper {
+  flex: 0 0 auto;              /* Prevent items from shrinking */
+  width: 200px;                /* Fixed width for each background item */
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform var(--transition), opacity var(--transition);
+  background: var(--card-bg);
+  text-align: center;
+  padding: 5px;
+}
+
+.background-preview img,
+.owned-wallpaper img {
+  width: 100%;
+  height: 120px;               /* Fixed height for images */
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.background-preview p,
+.owned-wallpaper p {
+  margin: 5px 0 0;
+  font-size: 0.9rem;
+}
+
+.background-preview span {
+  display: block;
+  font-size: 0.8rem;
+  margin-top: 3px;
+  color: #bbb;
+}
+
+.background-preview:hover,
+.owned-wallpaper:hover {
+  transform: scale(1.05);
+  opacity: 0.95;
+}
 
 
+  /* ----------------------------
+     Game Launcher Modal Styles
+  -----------------------------*/
+  .game-modal-content {
+    background: var(--card-bg);
+    padding: 20px 30px;
+    border-radius: var(--radius);
+    color: var(--text);
+    text-align: left;
+    max-width: 600px;
+    width: 90%;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+  }
+  .game-item {
+    border: 1px solid #444;
+    border-radius: var(--radius);
+    padding: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: var(--card-bg);
+  }
+  .game-item h3 {
+    margin: 0;
+  }
+  .progress-bar-container {
+    width: 100%;
+    background: #444;
+    border-radius: calc(var(--radius) / 2);
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .progress-bar {
+    height: 10px;
+    background: var(--primary);
+    width: 0%;
+    transition: width var(--transition);
+  }
+  .game-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  .game-buttons button {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: calc(var(--radius) / 2);
+    cursor: pointer;
+    transition: background var(--transition);
+    background: var(--primary);
+    color: var(--text);
+  }
+  .game-buttons button:hover {
+    background: var(--primary-hover);
+  }
+</style>
 
-    /* ----------------------------
-       Global Styles & Layout
-    -----------------------------*/
-    body {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #1e1e2f, #252945, #191923);
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-direction: column;
-      position: relative;
-      transition: all 0.3s ease;
-    }
-    .top-buttons {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      display: flex;
-      gap: 20px;
-      justify-content: flex-end;
-    }
-    .top-btn {
-      background-color: #1f4068;
-      color: #fff;
-      border: none;
-      padding: 12px 20px;
-      cursor: pointer;
-      border-radius: 12px;
-      font-size: 1rem;
-      transition: background-color 0.3s, transform 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .top-btn:hover {
-      background-color: #162447;
-      transform: translateY(-3px);
-    }
-    .top-btn i {
-      font-size: 20px;
-    }
-    #pointsDisplay {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      font-size: 20px;
-      color: white;
-      padding: 10px;
-      background-color: black;
-      opacity: 0.5;
-    }
-    .container {
-      text-align: center;
-      animation: fadeIn 1s ease-in-out;
-      width: 100%;
-      max-width: 1000px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    /* ----------------------------
-       Search Bar
-    -----------------------------*/
-    .search-container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto 20px;
-      display: flex;
-      align-items: stretch;
-      overflow: hidden;
-      border-radius: 30px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-    .search-bar {
-      flex: 1;
-      padding: 20px 30px;
-      font-size: 1.5rem;
-      border: 2px solid #333;
-      border-right: none;
-      border-radius: 30px 0 0 30px;
-      background-color: #222;
-      color: #fff;
-      outline: none;
-      transition: all 0.3s ease;
-    }
-    .search-bar::placeholder {
-      color: #888;
-    }
-    .search-bar:focus {
-      border-color: #0078ff;
-      box-shadow: 0 0 8px rgba(0, 120, 255, 0.5);
-    }
-    .search-icon-btn {
-      padding: 20px 30px;
-      border: none;
-      background-color: #0078ff;
-      color: #fff;
-      font-size: 1.5rem;
-      cursor: pointer;
-      border-radius: 0 30px 30px 0;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-    }
-    .search-icon-btn:hover {
-      background-color: #0056cc;
-      transform: scale(1.05);
-    }
-    /* ----------------------------
-       Welcome & Shortcuts
-    -----------------------------*/
-    .welcome-page {
-      width: 100%;
-      max-width: 600px;
-      padding: 20px;
-      border: 5px solid transparent;
-      border-radius: 20px;
-      background-color: #222;
-      color: #fff;
-      margin-bottom: 20px;
-      text-align: center;
-      font-size: 1.4rem;
-    }
-    .shortcuts {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 20px;
-    }
-    .shortcut-btn {
-      background-color: #1f4068;
-      color: #fff;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 12px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background-color 0.3s, transform 0.3s;
-    }
-    .shortcut-btn:hover {
-      background-color: #162447;
-      transform: translateY(-3px);
-    }
-    /* ----------------------------
-       Common Modal Styles
-    -----------------------------*/
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-    .modal-content {
-      background-color: #1a1a2e;
-      padding: 25px;
-      border-radius: 12px;
-      color: #fff;
-      text-align: center;
-      max-width: 500px;
-      width: 100%;
-      font-size: 1rem;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-    }
-    .modal-content button {
-      margin-top: 15px;
-      background-color: #1f4068;
-      color: #fff;
-      border: none;
-      padding: 12px 20px;
-      cursor: pointer;
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: background-color 0.3s;
-    }
-    .modal-content button:hover {
-      background-color: #162447;
-    }
-    /* ----------------------------
-       News Modal Styles
-    -----------------------------*/
-    .news-container {
-      max-height: 300px;
-      overflow-y: auto;
-      margin: 15px 0;
-      text-align: left;
-    }
-    .news-item {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 15px;
-      border-bottom: 1px solid #333;
-      padding-bottom: 10px;
-    }
-    .news-item img {
-      width: 100px;
-      height: auto;
-      border-radius: 8px;
-    }
-    .news-item p {
-      flex: 1;
-      margin: 0;
-      font-size: 1rem;
-      line-height: 1.4;
-    }
-    /* ----------------------------
-       Wallpaper Shop Styles (Retained)
-    -----------------------------*/
-    .background-previews, .owned-wallpapers {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-bottom: 15px;
-      max-height: 300px;
-      overflow-y: auto;
-    }
-    .background-preview, .owned-wallpaper {
-      width: 45%;
-      border-radius: 12px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.3s, opacity 0.3s;
-      background-color: #222;
-      padding: 5px;
-      text-align: center;
-    }
-    .background-preview img, .owned-wallpaper img {
-      width: 100%;
-      height: 120px;
-      object-fit: contain;
-      border-radius: 12px;
-    }
-    .background-preview p, .owned-wallpaper p {
-      margin: 5px 0 0;
-      font-size: 0.9rem;
-    }
-    .background-preview span {
-      display: block;
-      font-size: 0.8rem;
-      margin-top: 3px;
-      color: #ccc;
-    }
-    .background-preview:hover, .owned-wallpaper:hover {
-      transform: scale(1.05);
-      opacity: 0.9;
-    }
-    /* ----------------------------
-       Game Launcher Modal Styles
-    -----------------------------*/
-    .game-modal-content {
-      background-color: #1a1a2e;
-      padding: 25px;
-      border-radius: 12px;
-      color: #fff;
-      text-align: left;
-      max-width: 600px;
-      width: 100%;
-      font-size: 1rem;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-    }
-    .game-item {
-      border: 1px solid #333;
-      border-radius: 8px;
-      padding: 10px;
-      margin-bottom: 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .game-item h3 {
-      margin: 0;
-    }
-    .progress-bar-container {
-      width: 100%;
-      background-color: #333;
-      border-radius: 4px;
-      overflow: hidden;
-      margin-top: 8px;
-    }
-    .progress-bar {
-      height: 10px;
-      background-color: #0078ff;
-      width: 0%;
-      transition: width 0.3s;
-    }
-    .game-buttons {
-      display: flex;
-      gap: 10px;
-    }
-    .game-buttons button {
-      flex: 1;
-      padding: 8px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    .game-buttons button:hover {
-      background-color: #162447;
-    }
+</style>
+
   </style>
 </head>
 <body>
-  <!-- Top Buttons (Launcher, News, Background) -->
+  <div id="clock"></div>
+
+  <!-- Top Buttons (Launcher, News, Background)-->
   <div class="top-buttons">
-    <button class="top-btn" onclick="showGameLauncherModal()">
+   <!-- <button class="top-btn" onclick="showGameLauncherModal()">
       <i class="fas fa-gamepad"></i> Launcher
-    </button>
+    </button>-->
     <button class="top-btn" onclick="showNewsSection()">
       <i class="fas fa-newspaper"></i> News
     </button>
@@ -347,8 +432,7 @@
   <div id="pointsDisplay">Points: 0</div>
 
   <!-- Main Content -->
-  <div class="container">
-    <h1 class="welcome-page">Welcome to Best Gaming Browser</h1>
+  <div class="c">
     <form id="searchForm" action="https://www.google.com/search" method="get" onsubmit="handleSearch(event)">
       <div class="search-container">
         <input type="text" class="search-bar" name="q" placeholder="Search for gaming content...">
@@ -380,32 +464,28 @@
       <h2>Gaming News</h2>
       <div class="news-container">
         <div class="news-item">
-          <img src="news1.jpg" alt="News 1">
-          <p>Fortnite: Skins' "Legacy Shoes" are being converted into free Kicks Cosmetics.</p>
+          <img src="fortlogo.png" alt="News 1">
+          <p>Fortnite: THE FORTNITE MINI-EVENT COUNTDOWN IS LIVE</p>
         </div>
         <div class="news-item">
-          <img src="news2.jpg" alt="News 2">
-          <p>PlayStation: Servers were down for 20 hours and are now back online!</p>
-        </div>
-        <div class="news-item">
-          <img src="news3.jpg" alt="News 3">
+          <img src="fortlogo.png" alt="News 3">
           <p>Fortnite: New Iron Man & Avatar skins are coming soon!</p>
         </div>
         <div class="news-item">
-          <img src="news4.jpg" alt="News 4">
-          <p>Fortnite: JUJUTSU KAISEN x FORTNITE collaboration in the shop!</p>
+          <img src="fortlogo.png" alt="News 4">
+          <p>Fortnite: FAST & FURIOUS x FORTNITE SKINS ARE COMING SOON</p>
         </div>
         <div class="news-item">
-          <img src="news5.jpg" alt="News 5">
+          <img src="pslogo.png" alt="News 2">
+          <p>PlayStation: Servers were down for 20 hours and are now back online!</p>
+        </div>
+        <div class="news-item">
+          <img src="gtalogo.png" alt="News 5">
           <p>GTA: GTA 6 has been canceled until Fall 2025.</p>
         </div>
         <div class="news-item">
-          <img src="news6.jpg" alt="News 6">
-          <p>Roblox: Farid now plays Roblox for some reason...</p>
-        </div>
-        <div class="news-item">
-          <img src="news7.jpg" alt="News 7">
-          <p>Roblox: A new design for Roblox has been released.</p>
+          <img src="rologo.png" alt="News 7">
+          <p>Roblox: ROBLOX BROOKHAVEN HAS JUST BEEN SOLD!</p>
         </div>
       </div>
       <button onclick="closeNewsSection()">Close</button>
@@ -423,478 +503,709 @@
     </div>
   </div>
 
-  <!-- Modal for Game Launcher 
+ <!-- Modal for Game Launcher -->
   <div class="modal" id="gameLauncherModal">
     <div class="game-modal-content">
       <h2>Game Launcher</h2>
       <div id="gameList"></div>
       <button onclick="closeGameLauncherModal()">Close</button>
     </div>
-  </div>-->
+  </div>
 
   <script>
-    /*********************
-     * FIRST VISIT: ASK FOR REAL NAME
-     *********************/
-    if (!localStorage.getItem("realName")) {
-      let realName = prompt("Welcome! Please enter your real name (for trade purposes):");
-      if (realName) {
-        localStorage.setItem("realName", realName);
-      } else {
-        alert("You must enter a name. Please reload the page and try again.");
-      }
-    }
-    const realName = localStorage.getItem("realName");
+        // Function to update the clock in 12-hour format
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
 
-    /*********************
-     * POINTS & SEARCH SYSTEM
-     *********************/
-    let points = localStorage.getItem("points") ? parseInt(localStorage.getItem("points")) : 0;
-    updatePointsDisplay();
-    function updatePointsDisplay() {
-      document.getElementById("pointsDisplay").textContent = `Points: ${points}`;
-      localStorage.setItem("points", points);
+      // Determine AM or PM
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      
+      // Convert to 12-hour format
+      hours = hours % 12;
+      hours = hours ? hours : 12; // Adjust hour '0' to '12'
+
+      // Add a leading zero to minutes and seconds if needed
+      const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+      const formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
+
+      // Construct the time string
+      const timeString = hours + ':' + formattedMinutes + ':' + formattedSeconds + ' ' + ampm;
+      
+      // Display the time
+      document.getElementById('clock').textContent = timeString;
     }
-    // (Spam protection and captcha functions retained as in your code)
-    let searchTimestamps = localStorage.getItem("searchTimestamps") ? JSON.parse(localStorage.getItem("searchTimestamps")) : [];
-    let hourlySearchCount = localStorage.getItem("hourlySearchCount") ? parseInt(localStorage.getItem("hourlySearchCount")) : 0;
-    let lastHour = localStorage.getItem("lastHour") ? parseInt(localStorage.getItem("lastHour")) : 0;
-    let captchaCount = 0;
-    let lastSearchTime = localStorage.getItem("lastSearchTime") ? parseInt(localStorage.getItem("lastSearchTime")) : 0;
-    let isBanned = localStorage.getItem("isBanned") === "true";
-    let banEndTime = localStorage.getItem("banEndTime") ? parseInt(localStorage.getItem("banEndTime")) : null;
-    if (banEndTime && Date.now() < banEndTime) {
-      isBanned = true;
-      setBanTimeout(banEndTime);
-    } else {
-      localStorage.removeItem("banEndTime");
-      isBanned = false;
+
+    // Update the clock immediately and then every second
+    updateClock();
+    setInterval(updateClock, 1000);
+
+
+/*********************
+ * FIRST VISIT: ASK FOR REAL NAME
+ *********************/
+ if (!localStorage.getItem("realName")) {
+  let realName = prompt("Welcome! Please enter your real name (for trade purposes):");
+  if (realName) {
+    localStorage.setItem("realName", realName);
+  } else {
+    alert("You must enter a name. Please reload the page and try again.");
+  }
+}
+const realName = localStorage.getItem("realName");
+
+/*********************
+ * POINTS & SEARCH SYSTEM
+ *********************/
+let points = localStorage.getItem("points") ? parseInt(localStorage.getItem("points")) : 0;
+updatePointsDisplay();
+
+function updatePointsDisplay() {
+  document.getElementById("pointsDisplay").textContent = `Points: ${points}`;
+  localStorage.setItem("points", points);
+}
+
+let searchTimestamps = localStorage.getItem("searchTimestamps")
+  ? JSON.parse(localStorage.getItem("searchTimestamps"))
+  : [];
+let hourlySearchCount = localStorage.getItem("hourlySearchCount")
+  ? parseInt(localStorage.getItem("hourlySearchCount"))
+  : 0;
+let lastHour = localStorage.getItem("lastHour")
+  ? parseInt(localStorage.getItem("lastHour"))
+  : 0;
+let captchaCount = 0;
+let lastSearchTime = localStorage.getItem("lastSearchTime")
+  ? parseInt(localStorage.getItem("lastSearchTime"))
+  : 0;
+let isBanned = localStorage.getItem("isBanned") === "true";
+let banEndTime = localStorage.getItem("banEndTime")
+  ? parseInt(localStorage.getItem("banEndTime"))
+  : null;
+
+if (banEndTime && Date.now() < banEndTime) {
+  isBanned = true;
+  setBanTimeout(banEndTime);
+} else {
+  localStorage.removeItem("banEndTime");
+  isBanned = false;
+}
+
+function setBanTimeout(banEndTime) {
+  const remainingTime = banEndTime - Date.now();
+  setTimeout(() => {
+    isBanned = false;
+    localStorage.removeItem("banEndTime");
+    alert("Your ban has been lifted. Please search responsibly.");
+  }, remainingTime);
+}
+
+function handleSpamProtection() {
+  const now = Date.now();
+  const timeFrame = 75 * 1000;
+  const hourlyLimit = 10;
+
+  // Remove outdated timestamps and add the current one.
+  searchTimestamps = searchTimestamps.filter(ts => now - ts <= timeFrame);
+  searchTimestamps.push(now);
+  localStorage.setItem("searchTimestamps", JSON.stringify(searchTimestamps));
+
+  // Reset the hourly counter if a new hour has begun.
+  const currentHour = Math.floor(now / (60 * 60 * 1000));
+  if (currentHour !== lastHour) {
+    hourlySearchCount = 0;
+    lastHour = currentHour;
+    localStorage.setItem("lastHour", lastHour);
+  }
+
+  // Check for rapid searches (spam)
+  if (searchTimestamps.length > 6) {
+    isBanned = true;
+    banEndTime = now + 20 * 60 * 1000;
+    localStorage.setItem("banEndTime", banEndTime);
+    localStorage.setItem("isBanned", true);
+    alert("You have been banned for spamming searches!");
+    setBanTimeout(banEndTime);
+    return false;
+  }
+
+  // Instead of blocking the search when the hourly limit is reached,
+  // return a flag ("limit") so that no extra points are awarded.
+  if (hourlySearchCount >= hourlyLimit) {
+    return "limit";
+  } else {
+    hourlySearchCount++;
+    localStorage.setItem("hourlySearchCount", hourlySearchCount);
+    return true;
+  }
+}
+
+function checkCaptcha() {
+  if (captchaCount >= 7) {
+    const userInput = prompt("Please solve this captcha: What is 5 + 3?");
+    if (userInput !== "8") {
+      alert("Captcha failed. Please try again.");
+      return false;
     }
-    function setBanTimeout(banEndTime) {
-      const remainingTime = banEndTime - Date.now();
-      setTimeout(() => {
-        isBanned = false;
-        localStorage.removeItem("banEndTime");
-        alert("Your ban has been lifted. Please search responsibly.");
-      }, remainingTime);
-    }
-    function handleSpamProtection() {
-      const now = Date.now();
-      const timeFrame = 75 * 1000;
-      const hourlyLimit = 10;
-      searchTimestamps = searchTimestamps.filter(ts => now - ts <= timeFrame);
-      searchTimestamps.push(now);
-      localStorage.setItem("searchTimestamps", JSON.stringify(searchTimestamps));
-      const currentHour = Math.floor(now / (60 * 60 * 1000));
-      if (currentHour !== lastHour) {
-        hourlySearchCount = 0;
-        lastHour = currentHour;
-        localStorage.setItem("lastHour", lastHour);
-      }
-      if (hourlySearchCount >= hourlyLimit) {
-        alert("You've reached the hourly search limit for earning points. Try again later.");
-        return false;
-      }
-      if (searchTimestamps.length > 6) {
-        isBanned = true;
-        banEndTime = now + 20 * 60 * 1000;
-        localStorage.setItem("banEndTime", banEndTime);
-        localStorage.setItem("isBanned", true);
-        alert("You have been banned for spamming searches!");
-        setBanTimeout(banEndTime);
-        return false;
-      }
-      hourlySearchCount++;
-      localStorage.setItem("hourlySearchCount", hourlySearchCount);
-      return true;
-    }
-    function checkCaptcha() {
-      if (captchaCount >= 7) {
-        const userInput = prompt("Please solve this captcha: What is 5 + 3?");
-        if (userInput !== "8") {
-          alert("Captcha failed. Please try again.");
-          return false;
-        }
-        captchaCount = 0;
-      }
-      captchaCount++;
-      return true;
-    }
-    function handleSearch(event) {
-      event.preventDefault();
-      const now = Date.now();
-      if (isBanned) {
-        alert(`You are banned! Try again after ${Math.ceil((banEndTime - now) / 60000)} minutes.`);
-        return;
-      }
-      const popupTest = window.open("", "_blank");
-      if (!popupTest || popupTest.closed || typeof popupTest.closed === "undefined") {
-        alert("Pop-ups are blocked! Enable them to earn points.");
-        return;
-      }
-      popupTest.close();
-      if (lastSearchTime && now - lastSearchTime < 10000) {
-        alert(`Please wait ${Math.ceil((10000 - (now - lastSearchTime)) / 1000)} seconds before searching again.`);
-        return;
-      }
-      if (!handleSpamProtection() || !checkCaptcha()) return;
-      lastSearchTime = now;
-      localStorage.setItem("lastSearchTime", lastSearchTime);
-      increasePoints();
-      document.getElementById("searchForm").submit();
-    }
-    function increasePoints() {
-      const randomPoints = Math.floor(Math.random() * 5) + 1;
-      points += randomPoints;
-      updatePointsDisplay();
-      alert(`You earned ${randomPoints} points!`);
-    }
-    /*********************
-     * GAME LAUNCHER SYSTEM
-     *********************/
-    // Define games with additional properties:
-    let games = localStorage.getItem("games")
-      ? JSON.parse(localStorage.getItem("games"))
-      : [
-          {
-            id: 5,
-            name: "Space Battle",
-            downloadSize: 1500,   // MB
-            updateSize: 200,      // MB
-            state: "not_installed",  // possible values: not_installed, downloading, installed, updating
-            version: "1.0",
-            progress: 0,
-            saveData: ""
-          },
-          {
-            id: 2,
-            name: "Racing Thunder",
-            downloadSize: 2000,
-            updateSize: 250,
-            state: "not_installed",
-            version: "1.0",
-            progress: 0,
-            saveData: ""
-          },
-          {
-            id: 3,
-            name: "Mystery Quest",
-            downloadSize: 1000,
-            updateSize: 150,
-            state: "not_installed",
-            version: "1.0",
-            progress: 0,
-            saveData: ""
-          }
-        ];
-    localStorage.setItem("games", JSON.stringify(games));
-    function saveGames() {
-      localStorage.setItem("games", JSON.stringify(games));
-    }
-    // Render games as cards in the launcher modal.
-    function renderGames() {
-      const container = document.getElementById("gameList");
-      container.innerHTML = "";
-      games.forEach(game => {
-        const gameDiv = document.createElement("div");
-        gameDiv.className = "game-item";
-        let statusText = "";
-        if (game.state === "not_installed") {
-          statusText = "Not Installed";
-        } else if (game.state === "downloading") {
-          statusText = "Downloading...";
-        } else if (game.state === "installed") {
-          statusText = "Installed";
-        } else if (game.state === "updating") {
-          statusText = "Updating...";
-        }
-        gameDiv.innerHTML = `<h3>${game.name}</h3>
-          <p>Download Size: ${game.downloadSize} MB</p>
-          <p>Update Size: ${game.updateSize} MB</p>
-          <p>Version: ${game.version}</p>
-          <p>Status: ${statusText}</p>`;
-        // If the game is downloading/updating, show a progress bar.
-        if (game.state === "downloading" || game.state === "updating") {
-          const progressContainer = document.createElement("div");
-          progressContainer.className = "progress-bar-container";
-          const progressBar = document.createElement("div");
-          progressBar.className = "progress-bar";
-          progressBar.style.width = game.progress + "%";
-          progressContainer.appendChild(progressBar);
-          gameDiv.appendChild(progressContainer);
-        }
-        const btnContainer = document.createElement("div");
-        btnContainer.className = "game-buttons";
-        // Only allow launching if installed and not updating/downloading.
-        if (game.state === "not_installed") {
-          const downloadBtn = document.createElement("button");
-          downloadBtn.textContent = "Download";
-          downloadBtn.onclick = function() { downloadGame(game.id); };
-          btnContainer.appendChild(downloadBtn);
-        } else if (game.state === "installed") {
-          const launchBtn = document.createElement("button");
-          launchBtn.textContent = "Launch";
-          launchBtn.onclick = function() { launchGame(game.id); };
-          btnContainer.appendChild(launchBtn);
-          const updateBtn = document.createElement("button");
-          updateBtn.textContent = "Update";
-          updateBtn.onclick = function() { updateGame(game.id); };
-          btnContainer.appendChild(updateBtn);
-        } else if (game.state === "downloading" || game.state === "updating") {
-          // When updating or downloading, disable buttons.
-          const disabledBtn = document.createElement("button");
-          disabledBtn.textContent = game.state === "downloading" ? "Downloading..." : "Updating...";
-          disabledBtn.disabled = true;
-          btnContainer.appendChild(disabledBtn);
-        }
-        gameDiv.appendChild(btnContainer);
-        container.appendChild(gameDiv);
-      });
-    }
-    // Simulate download progress.
-    function downloadGame(gameId) {
-      let game = games.find(g => g.id === gameId);
-      if (!game) return;
-      game.state = "downloading";
-      game.progress = 0;
-      saveGames();
-      renderGames();
-      const interval = setInterval(() => {
-        game.progress += 10;
-        if (game.progress >= 100) {
-          clearInterval(interval);
-          game.state = "installed";
-          game.progress = 0;
-          saveGames();
-          renderGames();
-        } else {
-          saveGames();
-          renderGames();
-        }
-      }, 200); // every 200ms simulating progress
-    }
-    // Simulate update progress.
-    function updateGame(gameId) {
-      let game = games.find(g => g.id === gameId);
-      if (!game || game.state !== "installed") return;
-      game.state = "updating";
-      game.progress = 0;
-      saveGames();
-      renderGames();
-      const interval = setInterval(() => {
-        game.progress += 10;
-        if (game.progress >= 100) {
-          clearInterval(interval);
-          game.state = "installed";
-          game.progress = 0;
-          // Increment version by 0.1 (for demo purposes)
-          let newVersion = parseFloat(game.version) + 0.1;
-          game.version = newVersion.toFixed(1);
-          saveGames();
-          renderGames();
-        } else {
-          saveGames();
-          renderGames();
-        }
-      }, 150); // every 150ms simulating update progress
-    }
-    // Launch game by redirecting to game.html.
-    function launchGame(gameId) {
-      let game = games.find(g => g.id === gameId);
-      if (!game || game.state !== "installed") return;
-      // Redirect to game.html (this could include query parameters if needed)
-      window.location.href = "game.html";
-    }
-    function showGameLauncherModal() {
-      renderGames();
-      document.getElementById("gameLauncherModal").style.display = "flex";
-    }
-    function closeGameLauncherModal() {
-      document.getElementById("gameLauncherModal").style.display = "none";
-    }
-    /*********************
-     * WALLPAPER SHOP FUNCTIONS (Retained)
-     *********************/
-    const wallpapersShop = [
-      {
-        id: 2,
-        name: "Fortnite Chapter 6",
-        image: "fnc6.png",
-        cost: 0,
-        requiresCode: false
-      },
-      {
-        id: 3,
-        name: "NANA",
-        image: "banana.jpeg",
-        cost: null,
-        requiresCode: true,
-        code: "GGP-PPP",
-        realMoneyCost: "$10"
-      },
-      {
-        id: 4,
-        name: "Fortnite OG Season 1",
-        image: "fortniteog1.jpeg",
-        cost: 50,
-        requiresCode: false
-      },
+    captchaCount = 0;
+  }
+  captchaCount++;
+  return true;
+}
+
+function handleSearch(event) {
+  event.preventDefault();
+  const now = Date.now();
+
+  if (isBanned) {
+    alert(`You are banned! Try again after ${Math.ceil((banEndTime - now) / 60000)} minutes.`);
+    return;
+  }
+
+  // Check that pop-ups are allowed.
+  const popupTest = window.open("", "_blank");
+  if (!popupTest || popupTest.closed || typeof popupTest.closed === "undefined") {
+    alert("Pop-ups are blocked! Enable them to earn points.");
+    return;
+  }
+  popupTest.close();
+
+  // Ensure a minimum delay between searches.
+  if (lastSearchTime && now - lastSearchTime < 10000) {
+    alert(`Please wait ${Math.ceil((10000 - (now - lastSearchTime)) / 1000)} seconds before searching again.`);
+    return;
+  }
+
+  const spamStatus = handleSpamProtection();
+  if (spamStatus === false || !checkCaptcha()) return;
+
+  lastSearchTime = now;
+  localStorage.setItem("lastSearchTime", lastSearchTime);
+
+  // Award points only if the hourly limit hasn't been reached.
+  if (spamStatus !== "limit") {
+    increasePoints();
+  }
+
+  document.getElementById("searchForm").submit();
+}
+
+function increasePoints() {
+  const randomPoints = Math.floor(Math.random() * 5) + 1;
+  points += randomPoints;
+  updatePointsDisplay();
+  alert(`You earned ${randomPoints} points!`);
+}
+
+/*********************
+ * GAME LAUNCHER SYSTEM
+ *********************/
+let games = localStorage.getItem("games")
+  ? JSON.parse(localStorage.getItem("games"))
+  : [
       {
         id: 5,
-        name: "Fortnite OG Season 2",
-        image: "fortniteog2.jpeg",
-        cost: 50,
-        requiresCode: false
+        name: "Space Battle",      // MB
+        state: "not_installed",  // possible values: not_installed, downloading, installed, updating
+        version: "1.0",
+        progress: 0,
+        saveData: ""
       },
-      {
-        id: 6,
-        name: "Fortnite Item Shop",
-        image: "fnis.png",
-        cost: 25,
-        requiresCode: false
-      },
-      {
-        id: 7,
-        name: "MINI BOX PVP",
-        image: "Beyond.PNG",
-        cost: null,
-        requiresCode: true,
-        code: "TT3-PPP",
-        realMoneyCost: "$10"
-      }
     ];
-    let purchasedWallpapers = localStorage.getItem("purchasedWallpapers")
-      ? JSON.parse(localStorage.getItem("purchasedWallpapers"))
-      : {};
-    wallpapersShop.forEach(w => {
-      if (w.cost === 0) {
-        purchasedWallpapers[w.id] = true;
-      }
-    });
-    localStorage.setItem("purchasedWallpapers", JSON.stringify(purchasedWallpapers));
-    let usedWallpaperCodes = localStorage.getItem("usedWallpaperCodes")
-      ? JSON.parse(localStorage.getItem("usedWallpaperCodes"))
-      : [];
-    localStorage.setItem("usedWallpaperCodes", JSON.stringify(usedWallpaperCodes));
-    function changeBackground(image) {
-      document.body.style.backgroundImage = `url(${image})`;
-      localStorage.setItem("background", image);
+localStorage.setItem("games", JSON.stringify(games));
+
+function saveGames() {
+  localStorage.setItem("games", JSON.stringify(games));
+}
+
+function renderGames() {
+  const container = document.getElementById("gameList");
+  container.innerHTML = "";
+  games.forEach(game => {
+    const gameDiv = document.createElement("div");
+    gameDiv.className = "game-item";
+    let statusText = "";
+    if (game.state === "not_installed") {
+      statusText = "Not Installed";
+    } else if (game.state === "downloading") {
+      statusText = "Downloading...";
+    } else if (game.state === "installed") {
+      statusText = "Installed";
+    } else if (game.state === "updating") {
+      statusText = "Updating...";
     }
-    function handleWallpaperSelection(wallpaper) {
-      if (purchasedWallpapers[wallpaper.id]) {
-        changeBackground(wallpaper.image);
-      } else {
-        if (wallpaper.requiresCode) {
-          const userCode = prompt("Enter redemption code for " + wallpaper.name + ":");
-          if (userCode && userCode === wallpaper.code) {
-            if (usedWallpaperCodes.includes(userCode)) {
-              alert("This code has already been used.");
-            } else {
-              usedWallpaperCodes.push(userCode);
-              localStorage.setItem("usedWallpaperCodes", JSON.stringify(usedWallpaperCodes));
-              purchasedWallpapers[wallpaper.id] = true;
-              localStorage.setItem("purchasedWallpapers", JSON.stringify(purchasedWallpapers));
-              alert(wallpaper.name + " unlocked!");
-              changeBackground(wallpaper.image);
-              populateWallpapersShop();
-              populateOwnedWallpapers();
-            }
-          } else {
-            alert("Invalid code!");
-          }
+    gameDiv.innerHTML = `<h3>${game.name}</h3>
+      <p>Download Size: ${game.downloadSize} MB</p>
+      <p>Update Size: ${game.updateSize} MB</p>
+      <p>Version: ${game.version}</p>
+      <p>Status: ${statusText}</p>`;
+    
+    // Show a progress bar when downloading or updating.
+    if (game.state === "downloading" || game.state === "updating") {
+      const progressContainer = document.createElement("div");
+      progressContainer.className = "progress-bar-container";
+      const progressBar = document.createElement("div");
+      progressBar.className = "progress-bar";
+      progressBar.style.width = game.progress + "%";
+      progressContainer.appendChild(progressBar);
+      gameDiv.appendChild(progressContainer);
+    }
+    
+    const btnContainer = document.createElement("div");
+    btnContainer.className = "game-buttons";
+    if (game.state === "not_installed") {
+      const downloadBtn = document.createElement("button");
+      downloadBtn.textContent = "Download";
+      downloadBtn.onclick = function() { downloadGame(game.id); };
+      btnContainer.appendChild(downloadBtn);
+    } else if (game.state === "installed") {
+      const launchBtn = document.createElement("button");
+      launchBtn.textContent = "Launch";
+      launchBtn.onclick = function() { launchGame(game.id); };
+      btnContainer.appendChild(launchBtn);
+      const updateBtn = document.createElement("button");
+      updateBtn.textContent = "Update";
+      updateBtn.onclick = function() { updateGame(game.id); };
+      btnContainer.appendChild(updateBtn);
+    } else if (game.state === "downloading" || game.state === "updating") {
+      const disabledBtn = document.createElement("button");
+      disabledBtn.textContent = game.state === "downloading" ? "Downloading..." : "Updating...";
+      disabledBtn.disabled = true;
+      btnContainer.appendChild(disabledBtn);
+    }
+    gameDiv.appendChild(btnContainer);
+    container.appendChild(gameDiv);
+  });
+}
+
+function downloadGame(gameId) {
+  let game = games.find(g => g.id === gameId);
+  if (!game) return;
+  game.state = "downloading";
+  game.progress = 0;
+  saveGames();
+  renderGames();
+  const interval = setInterval(() => {
+    game.progress += 10;
+    if (game.progress >= 100) {
+      clearInterval(interval);
+      game.state = "installed";
+      game.progress = 0;
+      saveGames();
+      renderGames();
+    } else {
+      saveGames();
+      renderGames();
+    }
+  }, 200);
+}
+
+function updateGame(gameId) {
+  let game = games.find(g => g.id === gameId);
+  if (!game || game.state !== "installed") return;
+  game.state = "updating";
+  game.progress = 0;
+  saveGames();
+  renderGames();
+  const interval = setInterval(() => {
+    game.progress += 10;
+    if (game.progress >= 100) {
+      clearInterval(interval);
+      game.state = "installed";
+      game.progress = 0;
+      // Increment version by 0.1 for demo purposes.
+      let newVersion = parseFloat(game.version) + 0.1;
+      game.version = newVersion.toFixed(1);
+      saveGames();
+      renderGames();
+    } else {
+      saveGames();
+      renderGames();
+    }
+  }, 150);
+}
+
+function launchGame(gameId) {
+  let game = games.find(g => g.id === gameId);
+  if (!game || game.state !== "installed") return;
+  window.location.href = "game.html";
+}
+
+function showGameLauncherModal() {
+  renderGames();
+  document.getElementById("gameLauncherModal").style.display = "flex";
+}
+
+function closeGameLauncherModal() {
+  document.getElementById("gameLauncherModal").style.display = "none";
+}
+
+/*********************
+ * WALLPAPER SHOP FUNCTIONS
+ *********************/
+// Note: The wallpaper objects now can include a "type" property.
+// For static wallpapers, type can be omitted or set to "image".
+// For animated wallpapers, set type to "video" (and the file should be an MP4).
+
+const wallpapersShop = [
+  {
+    id: 2,
+    name: "Fortnite Chapter 6",
+    image: "fnc6.png",
+    cost: 0,
+    requiresCode: false,
+    type: "image"
+  },
+  {
+    id: 3,
+    name: "NANA",
+    image: "banana.jpeg",
+    cost: null,
+    requiresCode: true,
+    code: "GGP-PPP",
+    realMoneyCost: "$10",
+    type: "image"
+  },
+  /*{
+    id: 4,
+    name: "Fortnite OG Season 1",
+    image: "fortniteog1.jpeg",
+    cost: 50,
+    requiresCode: false,
+    type: "image"
+  },
+  {
+    id: 5,
+    name: "Fortnite OG Season 2",
+    image: "fortniteog2.jpeg",
+    cost: 50,
+    requiresCode: false,
+    type: "image"
+  },
+  {
+    id: 6,
+    name: "Fortnite Item Shop",
+    image: "fnis.png",
+    cost: 25,
+    requiresCode: false,
+    type: "image"
+  },*/
+  {
+    id: 7,
+    name: "MINI BOX PVP",
+    image: "Beyond.PNG",
+    cost: null,
+    requiresCode: true,
+    code: "TT3-PPP",
+    realMoneyCost: "$10",
+    type: "image"
+  },
+  {
+    id: 12,
+    name: "Fishstick Meme",
+    image: "fishstick.jpeg",
+    cost: null,
+    requiresCode: true,
+    code: "NON-MEME",
+    realMoneyCost: "$5",
+    type: "image"
+  },
+  {
+    id: 13,
+    name: "Fishstick",
+    image: "fishstick2.jpeg",
+    cost: 100,
+    type: "image"
+  },
+  {
+    id: 14,
+    name: "Controler Settings Wallaper",
+    image: "controler.jpeg",
+    cost: 150,
+    type: "image"
+  },
+  // New animated wallpaper example:
+  {
+    id: 8,
+    name: "Animated Reaper",
+    image: "reaper.mp4", // path to your MP4 video file
+    cost: 300,
+    requiresCode: false,
+    type: "video"
+  },
+  {
+    id: 9,
+    name: "Animated Chest",
+    image: "chest.mp4", // path to your MP4 video file
+    cost: 400,
+    requiresCode: false,
+    type: "video"
+  },
+  {
+    id: 15,
+    name: "Animated Skull Troper",
+    image: "skull.mp4", // path to your MP4 video file
+    cost: 300,
+    requiresCode: false,
+    type: "video"
+  },
+  {
+    id: 10,
+    name: "Animated Reaper",
+    image: "bush.mp4", // path to your MP4 video file
+    cost: null,
+    requiresCode: true,
+    code: "ANI-BUSH",
+    realMoneyCost: "$15",
+    type: "video"
+  },
+  {
+    id: 11,
+    name: "Animated Madara",
+    image: "anti.mp4", // path to your MP4 video file
+    cost: null,
+    requiresCode: true,
+    code: "ANI-MAD",
+    realMoneyCost: "$15",
+    type: "video"
+  }
+];
+
+let purchasedWallpapers = localStorage.getItem("purchasedWallpapers")
+  ? JSON.parse(localStorage.getItem("purchasedWallpapers"))
+  : {};
+  
+// Automatically mark free wallpapers as purchased.
+wallpapersShop.forEach(w => {
+  if (w.cost === 0) {
+    purchasedWallpapers[w.id] = true;
+  }
+});
+localStorage.setItem("purchasedWallpapers", JSON.stringify(purchasedWallpapers));
+
+let usedWallpaperCodes = localStorage.getItem("usedWallpaperCodes")
+  ? JSON.parse(localStorage.getItem("usedWallpaperCodes"))
+  : [];
+localStorage.setItem("usedWallpaperCodes", JSON.stringify(usedWallpaperCodes));
+
+/**
+ * changeBackground(wallpaper):
+ * Depending on the wallpaper type, either sets a static background image
+ * or creates a full‑screen video element for animated wallpapers.
+ */
+function changeBackground(wallpaper) {
+  // Save the chosen wallpaper as a JSON string.
+  localStorage.setItem("background", JSON.stringify(wallpaper));
+  
+  if (wallpaper.type && wallpaper.type === "video") {
+    // Remove any existing video background.
+    let existingVideo = document.getElementById("backgroundVideo");
+    if (existingVideo) {
+      existingVideo.parentNode.removeChild(existingVideo);
+    }
+    // Clear any static background.
+    document.body.style.backgroundImage = "none";
+    
+    // Create and style a full-screen video element.
+    let videoElem = document.createElement("video");
+    videoElem.id = "backgroundVideo";
+    videoElem.src = wallpaper.image;
+    videoElem.autoplay = true;
+    videoElem.loop = true;
+    videoElem.muted = true;
+    videoElem.style.position = "fixed";
+    videoElem.style.top = "0";
+    videoElem.style.left = "0";
+    videoElem.style.width = "100%";
+    videoElem.style.height = "100%";
+    videoElem.style.objectFit = "cover";
+    videoElem.style.zIndex = "-1";
+    document.body.appendChild(videoElem);
+  } else {
+    // For static image wallpapers, remove any video element.
+    let existingVideo = document.getElementById("backgroundVideo");
+    if (existingVideo) {
+      existingVideo.parentNode.removeChild(existingVideo);
+    }
+    document.body.style.backgroundImage = `url(${wallpaper.image})`;
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
+  }
+}
+
+/**
+ * handleWallpaperSelection(wallpaper):
+ * If the wallpaper is already purchased, it changes the background.
+ * Otherwise, if a code is required or points are needed, it handles that logic.
+ */
+function handleWallpaperSelection(wallpaper) {
+  if (purchasedWallpapers[wallpaper.id]) {
+    changeBackground(wallpaper);
+  } else {
+    if (wallpaper.requiresCode) {
+      const userCode = prompt("Enter redemption code for " + wallpaper.name + ":");
+      if (userCode && userCode === wallpaper.code) {
+        if (usedWallpaperCodes.includes(userCode)) {
+          alert("This code has already been used.");
         } else {
-          if (points >= wallpaper.cost) {
-            if (confirm("This wallpaper costs " + wallpaper.cost + " points. Do you want to purchase it?")) {
-              points -= wallpaper.cost;
-              updatePointsDisplay();
-              purchasedWallpapers[wallpaper.id] = true;
-              localStorage.setItem("purchasedWallpapers", JSON.stringify(purchasedWallpapers));
-              alert(wallpaper.name + " purchased!");
-              changeBackground(wallpaper.image);
-              populateWallpapersShop();
-              populateOwnedWallpapers();
-            }
-          } else {
-            alert("Not enough points to purchase this wallpaper.");
-          }
+          usedWallpaperCodes.push(userCode);
+          localStorage.setItem("usedWallpaperCodes", JSON.stringify(usedWallpaperCodes));
+          purchasedWallpapers[wallpaper.id] = true;
+          localStorage.setItem("purchasedWallpapers", JSON.stringify(purchasedWallpapers));
+          alert(wallpaper.name + " unlocked!");
+          changeBackground(wallpaper);
+          populateWallpapersShop();
+          populateOwnedWallpapers();
         }
+      } else {
+        alert("Invalid code!");
+      }
+    } else {
+      if (points >= wallpaper.cost) {
+        if (confirm("This wallpaper costs " + wallpaper.cost + " points. Do you want to purchase it?")) {
+          points -= wallpaper.cost;
+          updatePointsDisplay();
+          purchasedWallpapers[wallpaper.id] = true;
+          localStorage.setItem("purchasedWallpapers", JSON.stringify(purchasedWallpapers));
+          alert(wallpaper.name + " purchased!");
+          changeBackground(wallpaper);
+          populateWallpapersShop();
+          populateOwnedWallpapers();
+        }
+      } else {
+        alert("Not enough points to purchase this wallpaper.");
       }
     }
-    function populateWallpapersShop() {
-      const container = document.querySelector(".background-previews");
-      container.innerHTML = "";
-      wallpapersShop.forEach(wallpaper => {
-        const previewDiv = document.createElement("div");
-        previewDiv.className = "background-preview";
+  }
+}
+
+function populateWallpapersShop() {
+  const container = document.querySelector(".background-previews");
+  container.innerHTML = "";
+  wallpapersShop.forEach(wallpaper => {
+    const previewDiv = document.createElement("div");
+    previewDiv.className = "background-preview";
+    
+    // Use a video element for animated wallpapers; otherwise, use an image.
+    if (wallpaper.type && wallpaper.type === "video") {
+      const video = document.createElement("video");
+      video.src = wallpaper.image;
+      video.muted = true;
+      video.loop = true;
+      video.autoplay = true;
+      video.style.width = "100%";
+      previewDiv.appendChild(video);
+    } else {
+      const img = document.createElement("img");
+      img.src = wallpaper.image;
+      previewDiv.appendChild(img);
+    }
+    
+    const nameP = document.createElement("p");
+    nameP.textContent = wallpaper.name;
+    previewDiv.appendChild(nameP);
+    
+    const costP = document.createElement("span");
+    if (wallpaper.cost === 0) {
+      costP.textContent = "Free";
+    } else if (wallpaper.requiresCode) {
+      costP.textContent = wallpaper.realMoneyCost
+        ? "Real Money: " + wallpaper.realMoneyCost
+        : "Requires Code";
+    } else {
+      costP.textContent = "Cost: " + wallpaper.cost + " points";
+    }
+    previewDiv.appendChild(costP);
+    
+    previewDiv.addEventListener("click", function () {
+      handleWallpaperSelection(wallpaper);
+    });
+    container.appendChild(previewDiv);
+  });
+}
+
+function populateOwnedWallpapers() {
+  const container = document.querySelector(".owned-wallpapers");
+  container.innerHTML = "";
+  wallpapersShop.forEach(wallpaper => {
+    if (purchasedWallpapers[wallpaper.id]) {
+      const ownedDiv = document.createElement("div");
+      ownedDiv.className = "owned-wallpaper";
+      
+      // Use a video element for animated wallpapers; otherwise, use an image.
+      if (wallpaper.type && wallpaper.type === "video") {
+        const video = document.createElement("video");
+        video.src = wallpaper.image;
+        video.muted = true;
+        video.loop = true;
+        video.autoplay = true;
+        video.style.width = "100%";
+        ownedDiv.appendChild(video);
+      } else {
         const img = document.createElement("img");
         img.src = wallpaper.image;
-        previewDiv.appendChild(img);
-        const nameP = document.createElement("p");
-        nameP.textContent = wallpaper.name;
-        previewDiv.appendChild(nameP);
-        const costP = document.createElement("span");
-        if (wallpaper.cost === 0) {
-          costP.textContent = "Free";
-        } else if (wallpaper.requiresCode) {
-          costP.textContent = wallpaper.realMoneyCost ? "Real Money: " + wallpaper.realMoneyCost : "Requires Code";
-        } else {
-          costP.textContent = "Cost: " + wallpaper.cost + " points";
-        }
-        previewDiv.appendChild(costP);
-        previewDiv.addEventListener("click", function () {
-          handleWallpaperSelection(wallpaper);
-        });
-        container.appendChild(previewDiv);
+        ownedDiv.appendChild(img);
+      }
+      
+      const nameP = document.createElement("p");
+      nameP.textContent = wallpaper.name;
+      ownedDiv.appendChild(nameP);
+      
+      ownedDiv.addEventListener("click", function () {
+        changeBackground(wallpaper);
       });
+      container.appendChild(ownedDiv);
     }
-    function populateOwnedWallpapers() {
-      const container = document.querySelector(".owned-wallpapers");
-      container.innerHTML = "";
-      wallpapersShop.forEach(wallpaper => {
-        if (purchasedWallpapers[wallpaper.id]) {
-          const ownedDiv = document.createElement("div");
-          ownedDiv.className = "owned-wallpaper";
-          const img = document.createElement("img");
-          img.src = wallpaper.image;
-          ownedDiv.appendChild(img);
-          const nameP = document.createElement("p");
-          nameP.textContent = wallpaper.name;
-          ownedDiv.appendChild(nameP);
-          ownedDiv.addEventListener("click", function () {
-            changeBackground(wallpaper.image);
-          });
-          container.appendChild(ownedDiv);
-        }
-      });
-    }
-    /*********************
-     * MODAL CONTROL FUNCTIONS
-     *********************/
-    function showNewsSection() {
-      document.getElementById("newsSection").style.display = "flex";
-    }
-    function closeNewsSection() {
-      document.getElementById("newsSection").style.display = "none";
-    }
-    function showBackgroundSection() {
-      populateWallpapersShop();
-      populateOwnedWallpapers();
-      document.getElementById("backgroundSection").style.display = "flex";
-    }
-    function closeBackgroundSection() {
-      document.getElementById("backgroundSection").style.display = "none";
-    }
-    function showGameLauncherModal() {
-      renderGames();
-      document.getElementById("gameLauncherModal").style.display = "flex";
-    }
-    function closeGameLauncherModal() {
-      document.getElementById("gameLauncherModal").style.display = "none";
-    }
-    document.getElementById("searchForm").addEventListener("submit", handleSearch);
-    if (localStorage.getItem("background")) {
-      document.body.style.backgroundImage = `url(${localStorage.getItem("background")})`;
-    }
+  });
+}
+
+/*********************
+ * MODAL CONTROL FUNCTIONS
+ *********************/
+function showNewsSection() {
+  document.getElementById("newsSection").style.display = "flex";
+}
+
+function closeNewsSection() {
+  document.getElementById("newsSection").style.display = "none";
+}
+
+function showBackgroundSection() {
+  populateWallpapersShop();
+  populateOwnedWallpapers();
+  document.getElementById("backgroundSection").style.display = "flex";
+}
+
+function closeBackgroundSection() {
+  document.getElementById("backgroundSection").style.display = "none";
+}
+
+function showGameLauncherModal() {
+  renderGames();
+  document.getElementById("gameLauncherModal").style.display = "flex";
+}
+
+function closeGameLauncherModal() {
+  document.getElementById("gameLauncherModal").style.display = "none";
+}
+
+document.getElementById("searchForm").addEventListener("submit", handleSearch);
+
+// On page load, if a wallpaper was previously selected, restore it.
+// Expect the stored background to be a JSON string.
+if (localStorage.getItem("background")) {
+  try {
+    const bgObj = JSON.parse(localStorage.getItem("background"));
+    changeBackground(bgObj);
+  } catch (e) {
+    // Fallback: if parsing fails, treat it as a static image URL.
+    document.body.style.backgroundImage = `url(${localStorage.getItem("background")})`;
+  }
+}
+
+
   </script>
 </body>
 </html>

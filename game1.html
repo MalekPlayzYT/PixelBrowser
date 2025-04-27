@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>V-Bucks Clicker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-start: #1a1d2e;
+      --bg-end: #343a5a;
+      --accent: #ffd500;
+      --card-bg: rgba(255,255,255,0.05);
+      --card-hover: rgba(255,255,255,0.1);
+      --text-light: #e0e0e0;
+      --text-dark: #1a1d2e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      width: 100%; max-width: 1000px;
+      background: rgba(32, 34, 52, 0.85);
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      padding: 40px;
+      backdrop-filter: blur(12px);
+      transition: transform 0.3s ease;
+    }
+    .container:hover { transform: translateY(-4px); }
+    h1 {
+      font-size: 3.2rem; font-weight: 800; margin-bottom: 10px;
+      color: var(--accent);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+      text-align: center;
+    }
+    #vbucks-display {
+      font-size: 2.6rem; font-weight: 600; margin-bottom: 30px;
+      text-align: center;
+    }
+    .icon-wrapper {
+      position: relative; width: 200px; height: 200px; margin: 0 auto 35px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #2a2d46, var(--bg-start));
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+    }
+    #vbucks-icon {
+      width: 140px; height: 140px;
+      background: url('vbucks.png') no-repeat center/contain;
+      cursor: pointer;
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+    #vbucks-icon:hover {
+      transform: scale(1.1) rotate(-10deg);
+      filter: drop-shadow(0 4px 8px rgba(255, 213, 0, 0.6));
+    }
+    #stats {
+      display: flex; justify-content: center; gap: 50px;
+      margin-bottom: 40px; flex-wrap: wrap;
+    }
+    #stats div {
+      background: var(--card-bg); padding: 16px 32px;
+      border-radius: 12px; font-size: 1.2rem; font-weight: 500;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    #stats div:hover { background: var(--card-hover); transform: translateY(-4px); }
+    h2.section-title {
+      font-size: 2rem; font-weight: 600; margin: 30px 0 10px;
+      color: var(--accent); text-align: left;
+      border-bottom: 2px solid var(--accent); padding-bottom: 4px;
+    }
+    #upgrades { display: flex; flex-direction: column; gap: 20px; }
+    .upgrade-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 24px;
+    }
+    .upgrade {
+      background: var(--card-bg); padding: 24px; border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+      display: flex; flex-direction: column; justify-content: space-between;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+    .upgrade:hover { transform: translateY(-8px); background: var(--card-hover); }
+    .upgrade h3 {
+      font-size: 1.3rem; font-weight: 600; margin-bottom: 12px;
+      color: var(--accent); text-align: center;
+    }
+    .upgrade p {
+      font-size: 1rem; margin-bottom: 14px; line-height: 1.5;
+      text-align: center;
+    }
+    .upgrade button {
+      background: var(--accent); color: var(--text-dark);
+      border: none; padding: 14px; border-radius: 10px;
+      font-weight: 700; font-size: 1.05rem; cursor: pointer;
+      transition: background 0.2s ease, transform 0.1s ease;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    }
+    .upgrade button:disabled {
+      background: #777; cursor: not-allowed;
+      box-shadow: none; color: #ccc;
+    }
+    .upgrade button:hover:not(:disabled) {
+      background: #e6c200; transform: translateY(-2px);
+    }
+    #footer { margin-top: 45px; font-size: 0.9rem;
+      text-align: center; opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>V-Bucks Clicker</h1>
+    <div id="vbucks-display">V-Bucks: <span id="vbucks">0</span></div>
+    <div class="icon-wrapper"><div id="vbucks-icon"></div></div>
+    <div id="stats">
+      <div>Per Click: <span id="cpc">1</span></div>
+      <div>Per Second: <span id="cps">0</span></div>
+      <div>Prestige: <span id="prestige">0</span></div>
+    </div>
+    <div id="upgrades"></div>
+    <div id="footer"></div>
+  </div>
+  <script>
+    const state = {
+      vbucks: 0,
+      cpc: 1,
+      cps: 0,
+      prestigeLevel: 0,
+      upgrades: [
+        { name: 'Click Multiplier', section: 'Basic Upgrades', baseCost: 500, qty: 0, cps: 0, cpc: 2, maxQty: 50 },
+        { name: 'Create A Youtube Channel', section: 'Streamer Life', baseCost: 20000, qty: 0, cps: 200, cpc: 5, maxQty: 1 },
+        { name: 'Create A Twich Channel', section: 'Streamer Life', baseCost: 20000, qty: 0, cps: 200, cpc: 5, maxQty: 1 },
+        { name: 'Met Nick Eh 30', section: 'Streamer Life', baseCost: 100000, qty: 0, cps: 1000, cpc: 20, maxQty: 1 },
+        { name: 'Streamer Sponsor', section: 'Streamer Life', baseCost: 100000, qty: 0, cps: 1000, cpc: 20, maxQty: null },
+        { name: 'Get Chung li to Party Hips', section: 'Streamer Life', baseCost: 500000, qty: 0, cps: 5000, cpc: 50, maxQty: 1 },
+        { name: 'Basic Autoclicker', section: 'Basic Upgrades', baseCost: 100, qty: 0, cps: 1, cpc: 0, maxQty: 50 },
+        { name: 'Advanced Autoclicker', section: 'Basic Upgrades', baseCost: 1000, qty: 0, cps: 10, cpc: 0, maxQty: 50 },
+        { name: 'Emote', section: 'Fortnite Item Shop', baseCost: 5000, qty: 0, cps: 50, cpc: 0, maxQty: null },
+        { name: 'PickAxe', section: 'Fortnite Item Shop', baseCost: 2000000, qty: 0, cps: 20000, cpc: 0, maxQty: null },
+        { name: 'Skin', section: 'Fortnite Item Shop', baseCost: 10000000, qty: 0, cps: 100000, cpc: 0, maxQty: null },
+        { name: 'Bugha', section: 'Hire Fortnite Pros', baseCost: 50000000, qty: 0, cps: 500000, cpc: 2000, maxQty: 1 },
+        { name: 'Peter-Bot', section: 'Hire Fortnite Pros', baseCost: 200000000, qty: 0, cps: 2000000, cpc: 10000, maxQty: 1 },
+        { name: 'Clix', section: 'Hire Fortnite Pros', baseCost: 1000000000, qty: 0, cps: 10000000, cpc: 50000, maxQty: 1 },
+        { name: 'Prestige Reset', section: 'Prestige', baseCost: 5000000, qty: 0, prestige: true, maxQty: null }
+      ]
+    };
+
+    // DOM refs
+    const vbSpan = document.getElementById('vbucks');
+    const cpcSpan = document.getElementById('cpc');
+    const cpsSpan = document.getElementById('cps');
+    const prestigeSpan = document.getElementById('prestige');
+    const upgradesDiv = document.getElementById('upgrades');
+    const icon = document.getElementById('vbucks-icon');
+    let lastClick = 0;
+
+    // Load saved state
+    function load() {
+      const saved = localStorage.getItem('vb_clicker');
+      if (!saved) return;
+      try {
+        const p = JSON.parse(saved);
+        state.vbucks = Number(p.vbucks) || 0;
+        state.cpc = Number(p.cpc) || (1 + state.prestigeLevel);
+        state.cps = Number(p.cps) || 0;
+        state.prestigeLevel = Number(p.prestigeLevel) || 0;
+        p.upgrades?.forEach((u, i) => {
+          state.upgrades[i].qty = Number(u.qty) || 0;
+        });
+      } catch (e) {
+        console.warn('Corrupt save, resetting.');
+        localStorage.removeItem('vb_clicker');
+      }
+    }
+
+    // Save state
+    function save() {
+      localStorage.setItem('vb_clicker', JSON.stringify(state));
+    }
+
+    // Calculate upgrade cost
+    function getCost(up) {
+      return Math.floor(up.baseCost * Math.pow(1.2, up.qty));
+    }
+
+    // Render UI
+    function render() {
+      vbSpan.textContent = Math.floor(state.vbucks);
+      cpcSpan.textContent = state.cpc;
+      cpsSpan.textContent = state.cps;
+      prestigeSpan.textContent = state.prestigeLevel;
+      upgradesDiv.innerHTML = '';
+
+      const sections = [...new Set(state.upgrades.map(u => u.section))];
+      sections.forEach(section => {
+        const sectEl = document.createElement('div');
+        sectEl.innerHTML = `<h2 class="section-title">${section}</h2><div class="upgrade-list"></div>`;
+        const listEl = sectEl.querySelector('.upgrade-list');
+        state.upgrades.filter(u => u.section === section).forEach((up, idx) => {
+          const cost = up.prestige
+            ? up.baseCost * (state.prestigeLevel + 1)
+            : getCost(up);
+          const canBuy = (!up.maxQty || up.qty < up.maxQty) && state.vbucks >= cost;
+          const btnText = up.maxQty && up.qty >= up.maxQty ? 'Maxed' : 'Buy';
+          const div = document.createElement('div'); div.className = 'upgrade';
+          div.innerHTML = `
+            <h3>${up.name}</h3>
+            <p>Owned: ${up.qty}${up.maxQty ? '/' + up.maxQty : ''}</p>
+            <p>Cost: ${up.prestige ? (cost / 1000000).toFixed(1) + 'M' : cost}</p>
+            <button ${canBuy ? '' : 'disabled'} data-index='${idx}'>${btnText}</button>
+          `;
+          listEl.appendChild(div);
+        });
+        upgradesDiv.appendChild(sectEl);
+      });
+
+      upgradesDiv.querySelectorAll('button').forEach(btn => btn.addEventListener('click', buyUpgrade));
+    }
+
+    // Handle clicks
+    icon.addEventListener('click', () => {
+      const now = Date.now();
+      if (now - lastClick < 100) return;
+      lastClick = now;
+      state.vbucks += state.cpc;
+      moveIcon();
+      render();
+    });
+
+    // Icon bounce
+    function moveIcon() {
+      const r = 50;
+      const dx = (Math.random() - 0.5) * r;
+      const dy = (Math.random() - 0.5) * r;
+      icon.style.transform = `translate(${dx}px, ${dy}px)`;
+    }
+
+    // Purchase upgrades
+    function buyUpgrade(e) {
+      const up = state.upgrades[e.target.dataset.index];
+      if (up.prestige) {
+        const cost = up.baseCost * (state.prestigeLevel + 1);
+        if (state.vbucks >= cost) {
+          state.prestigeLevel++;
+          state.vbucks = 0;
+          state.cps = 0;
+          state.cpc = 1 + state.prestigeLevel;
+          state.upgrades.forEach(u => u.qty = 0);
+        }
+      } else {
+        const cost = getCost(up);
+        if ((!up.maxQty || up.qty < up.maxQty) && state.vbucks >= cost) {
+          state.vbucks -= cost;
+          up.qty++;
+          state.cps += up.cps;
+          state.cpc += up.cpc;
+        }
+      }
+      render();
+    }
+
+    // Passive income & autosave
+    setInterval(() => { state.vbucks += state.cps / 10; render(); }, 100);
+    setInterval(save, 10000);
+    window.addEventListener('beforeunload', save);
+
+    // Initialize
+    load();
+    render();
+  </script>
+</body>
+</html>

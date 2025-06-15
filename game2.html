@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel AI — The Future of Assistance</title>
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      background: #f5f5f7;
+      color: #1d1d1f;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: linear-gradient(135deg, rgb(111,123,243), rgb(206,121,216), rgb(241,97,164));
+      color: white;
+      text-align: center;
+      padding: 120px 20px 100px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header h1 {
+      font-size: 3.5em;
+      margin-bottom: 20px;
+      animation: fadeSlide 2s ease forwards;
+      opacity: 0;
+    }
+
+    header p {
+      font-size: 1.4em;
+      max-width: 700px;
+      margin: 0 auto;
+      opacity: 0.9;
+      animation: fadeSlide 2s ease 0.5s forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .glow {
+      position: absolute;
+      width: 300%;
+      height: 300%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      animation: spin 30s linear infinite;
+      top: -100%;
+      left: -100%;
+      pointer-events: none;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 60px 20px;
+    }
+
+    .section {
+      margin-bottom: 60px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: riseUp 1.5s ease forwards;
+    }
+
+    .section:nth-child(odd) { animation-delay: 0.3s; }
+    .section:nth-child(even) { animation-delay: 0.6s; }
+
+    @keyframes riseUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section h2 {
+      font-size: 2.5em;
+      margin-bottom: 15px;
+      color: rgb(111,123,243);
+    }
+
+    .section p {
+      font-size: 1.2em;
+      line-height: 1.7;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .price-box {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      margin: 40px auto;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      max-width: 600px;
+      animation: popIn 1.5s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes popIn {
+      to { opacity: 1; transform: scale(1); }
+      from { opacity: 0; transform: scale(0.95); }
+    }
+
+    .price {
+      font-size: 1.3em;
+      color: rgb(241,97,164);
+      font-weight: 600;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      color: #6e6e73;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="glow"></div>
+    <h1>Meet Pixel AI</h1>
+    <p>Your next-generation assistant — designed for effortless browsing, gaming news, and everyday help.</p>
+  </header>
+
+  <div class="container">
+
+    <div class="price-box">
+      <p class="price">Pixel AI — $0 / Limited Use Per Day</p>
+      <p class="price">Pixel AI Pro — $3 / Unlimited Use</p>
+    </div>
+
+    <div class="section">
+      <h2>Pixel AI</h2>
+      <p>Pixel AI is more than just a tool. It's your smart companion inside Pixel Browser, guiding you through every feature with ease. Whether you're customizing your experience or exploring the web, Pixel AI ensures everything feels smooth and intuitive. Need wallpaper ideas? Curious about gaming updates? Pixel AI has you covered — all for free, with limited use per day.</p>
+    </div>
+
+    <div class="section">
+      <h2>Pixel AI Pro</h2>
+      <p>Pixel AI Pro takes assistance to the next level. Imagine ChatGPT — but smarter, safer, and friendlier. With human-like responses, Pixel AI Pro helps you handle everyday tasks, stay informed on the latest gaming news, and even crack a joke or two. <em>(The total sweetness of a game of Fortnite!)</em> Designed to handle the little details, Pixel AI Pro keeps your digital life effortless and fun.</p>
+    </div>
+
+    <div class="section">
+      <h2>Why Pixel AI?</h2>
+      <p>Pixel AI was created to seamlessly blend into your digital world — offering help when you need it, and staying out of the way when you don’t. It’s built with privacy, security, and elegance at its core. Every interaction feels natural, personal, and intelligent. Welcome to the future of assistance. Welcome to Pixel AI.</p>
+    </div>
+
+  </div>
+
+  <footer>
+    &copy; 2025 Pixel AI. All rights reserved.
+  </footer>
+
+</body>
+</html>

@@ -4,9 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gaming Search Hub</title>
-  <link rel="icon" href="Malek_logo__1_-removebg-preview copy.png" type="image/x-icon">
+  <link rel="icon" href="iconc.png" type="image/x-icon">
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="//code.tidio.co/jsm5jk3ipporqdubmtlnzgei1ulccs4a.js" async></script>
 <style>
   /* Style for the clock container */
   #clock {
@@ -93,6 +94,40 @@
   .top-btn i {
     font-size: 1.2rem;
   }
+  .top-btnn {
+    background: linear-gradient(-45deg,
+    rgb(111,123,243) 0%,
+    rgb(206,121,216) 50%,
+    rgb(241,97,164) 100%
+  );
+  background-size: 300% 300%;
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+
+  /* animation */
+  animation: gradientShift 2s ease infinite;
+    color: var(--text);
+    padding: 10px 16px;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color var(--transition), transform var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .top-btnn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+  }
+  .top-btnn i {
+    font-size: 1.2rem;
+  }
   #pointsDisplay {
     position: absolute;
     top: 20px;
@@ -102,6 +137,18 @@
     background-color: rgba(0, 0, 0, 0.75);
     border-radius: var(--radius);
   }
+
+  @keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 
   /* ----------------------------
      Main Container (Non‑Modal Pages)
@@ -167,7 +214,16 @@
     transition: background-color var(--transition), transform var(--transition);
   }
   .search-icon-btn:hover {
-    background-color: var(--hover);
+    background: linear-gradient(-45deg,
+    rgb(111,123,243) 0%,
+    rgb(206,121,216) 50%,
+    rgb(241,97,164) 100%
+  );
+  background-size: 300% 300%;
+
+
+  /* animation */
+  animation: gradientShift 2s ease infinite;
     transform: scale(1.05);
   }
 
@@ -206,6 +262,7 @@
     background-color: var(--primary-hover);
     transform: translateY(-2px);
   }
+
 
   /* ----------------------------
      Modal Overlay & Content
@@ -416,9 +473,11 @@
   <div id="clock"></div>
 
   <!-- Top Buttons (Launcher, News, Background)-->
+
+   
   <div class="top-buttons">
-    <button class="top-btn" onclick="location.assign('old.html');">
-      <i class="fas fa-gamepad"></i> Launcher
+    <button class="top-btnn" onclick="location.assign('game2.html');">
+      <i class="fa-solid fa-compass"></i></i> Pixel AI
     </button>
     
     <button class="top-btn" onclick="showNewsSection()">
@@ -443,6 +502,7 @@
       </div>
     </form>
     <!-- Shortcut Buttons -->
+    
     <div class="shortcuts">
       <button class="shortcut-btn" onclick="window.location.href='https://student.nis-blb.com/#/student'">
         <i class="fas fa-graduation-cap"></i> Student Portal
@@ -453,65 +513,102 @@
       <button class="shortcut-btn" onclick="window.location.href='https://www.blooket.com'">
         <i class="fas fa-chart-line"></i> Blooket
       </button>
-      <button class="shortcut-btn" onclick="window.location.href='https://www.fortnite.com/shop'">
-        <i class="fas fa-shopping-cart"></i> Fortnite Shop
+      <button class="shortcut-btn" onclick="window.location.href='old.html'">
+        <i class="fa-solid fa-hashtag"></i></i> Snippit
       </button>
+      
     </div>
   </div>
 
-  <!-- Modal for News -->
   <div class="modal" id="newsSection">
     <div class="modal-content">
       <h2>Gaming News</h2>
       <div class="news-container">
+  
+        <!-- GTA -->
         <div class="news-item">
-          <img src="fortlogo.png" alt="Fortnite News">
-          <p>Fortnite: Thunderbolts Cup live now—earn the free White Widow skin.</p>
-        </div>
-        <div class="news-item">
-          <img src="fortlogo.png" alt="Fortnite News">
-          <p>Fortnite: Death Star sighting teases an upcoming Star Wars crossover.</p>
-        </div>
-        <div class="news-item">
-          <img src="fortlogo.png" alt="Fortnite News">
-          <p>Fortnite: TMNT villain skins (Casey Jones, Bebop, Rocksteady, Krang) arriving soon.</p>
-        </div>
-        <div class="news-item">
-          <img src="rologo.png" alt="Roblox News">
-          <p>Roblox: Spring 2025 update launches revamped Creator Hub UI and Data Stores Manager beta.</p>
-        </div>
-        <div class="news-item">
-          <img src="rologo.png" alt="Roblox News">
-          <p>Roblox: Roblox Cube AI tools & Procedural Mesh API now in developer beta.</p>
-        </div>
-        <div class="news-item">
-          <img src="rologo.png" alt="Roblox News">
-          <p>Roblox: Regional pricing rolls out for game passes and paid content.</p>
-        </div>
-        <div class="news-item">
-          <img src="rologo.png" alt="Roblox News">
-          <p>Roblox: "Legacy Chat" retired—TextChat now mandatory as of April 30, 2025.</p>
+          <img src="gtalogo.png" alt="GTA News">
+          <p>GTA VI: Official release date set for May 26, 2026 on PS5 & Xbox Series X/S.</p>
         </div>
         <div class="news-item">
           <img src="gtalogo.png" alt="GTA News">
-          <p>GTA: First GTA VI trailer reveals Lucia & Jason in modern Vice City.</p>
+          <p>GTA Online “Money Fronts” update arrives June 17 2025—introduces laundering businesses, new vehicles, & QoL perks.</p>
+        </div>
+  
+        <!-- Fortnite -->
+        <div class="news-item">
+          <img src="fortlogo.png" alt="Fortnite News">
+          <p>Fortnite Chapter 6 Season 3 “Super” launched June 8 2025 with Hero Rank progression, new powers & Utopia City map.</p>
         </div>
         <div class="news-item">
-          <img src="gtalogo.png" alt="GTA News">
-          <p>GTA: Rockstar targets a Fall 2025 console release for GTA VI.</p>
+          <img src="fortlogo.png" alt="Fortnite News">
+          <p>Fortnite now supports Nintendo Switch 2 at 60 FPS/2176×1224 docked, with Joy-Con gyro controls & replay mode.</p>
         </div>
         <div class="news-item">
-          <img src="gtalogo.png" alt="GTA News">
-          <p>GTA Online: 4/20 event live now—Lamar Davis Hunting Pack mode and exclusive discounts.</p>
+          <img src="fortlogo.png" alt="Fortnite News">
+          <p>Fortnite introduces digital gift cards for V-Bucks purchases across platforms (launched June 4 2025).</p>
+        </div>
+  
+        <!-- Roblox -->
+        <div class="news-item">
+          <img src="rologo.png" alt="Roblox News">
+          <p>Roblox beta: Analytics Assistant gives weekly/monthly DAU reports; Studio adds bone & FACS animation APIs.</p>
         </div>
         <div class="news-item">
-          <img src="Malek_logo__1_-removebg-preview copy.png" alt="News 7">
-          <p>Pixel Browser: New Update, New Look, New Stuff</p>
+          <img src="rologo.png" alt="Roblox News">
+          <p>Roblox rolling out Regional Pricing and updated Terms of Use June 2025 (UK Online Safety Act compliance, IP rules).</p>
         </div>
+  
+        <!-- PlayStation -->
+        <div class="news-item">
+          <img src="pslogo.png" alt="PlayStation News">
+          <p>PlayStation State of Play (June 4 2025): Revealed MARVEL Tōkon, Nioh 3 demo, Metal Gear Solid Δ release on Aug 28.</p>
+        </div>
+        <div class="news-item">
+          <img src="pslogo.png" alt="PlayStation News">
+          <p>PS5 firmware v25.04 (June 4 2025) improves messaging UI & link filtering; multi-device DualSense pairing teased.</p>
+        </div>
+  
+        <!-- Xbox -->
+        <div class="news-item">
+          <img src="xboxlogo.png" alt="Xbox News">
+          <p>Xbox Games Showcase (June 8 2025): ASUS ROG Xbox Ally handhelds announced; Call of Duty: Black Ops 7 teased.</p>
+        </div>
+        <div class="news-item">
+          <img src="xboxlogo.png" alt="Xbox News">
+          <p>Game Pass additions: EA Sports FC 25 (June 12), The Alters & FBC: Firebreak launching day-one.</p>
+        </div>
+  
+        <!-- Blooket -->
+        <div class="news-item">
+          <img src="blooketlogo.webp" alt="Blooket News">
+          <p>Blooket “Coco Cabana” team mode & “Plushie Panic” arcade mode live May 2025; next “Snake Escape” coming this fall.</p>
+        </div>
+        <div class="news-item">
+          <img src="blooketlogo.webp" alt="Blooket News">
+          <p>Blooket UI update (May 14 2025): Redesigned Blooks page with collection scores & bulk-sell safeguards.</p>
+        </div>
+  
+        <!-- YouTube -->
+        <div class="news-item">
+          <img src="youtubelogo.webp" alt="YouTube News">
+          <p>YouTube mobile app gets resizable miniplayer, Collaborative Playlists with AI thumbnails & Sleep Timer feature.</p>
+        </div>
+        <div class="news-item">
+          <img src="youtubelogo.webp" alt="YouTube News">
+          <p>YouTube policy change June 2025: Moderation guidelines loosened for public-interest content; higher non-compliance threshold.</p>
+        </div>
+        <div class="news-item">
+          <img src="iconc.png" alt="Pixel Browser News">
+          <p>New Pixel AI and Pixel AI Pro Shine</p>
+        </div>
+  
       </div>
       <button onclick="closeNewsSection()">Close</button>
     </div>
   </div>
+  
+  
 
   <!-- Modal for Background (Wallpaper Shop) -->
   <div class="modal" id="backgroundSection">
@@ -871,10 +968,26 @@ function closeGameLauncherModal() {
 // For animated wallpapers, set type to "video" (and the file should be an MP4).
 
 const wallpapersShop = [
-  {
+  /*{
     id: 2,
     name: "Fortnite Chapter 6",
     image: "fnc6.png",
+    cost: 0,
+    requiresCode: false,
+    type: "image"
+  },*/
+  {
+    id: 18,
+    name: "Fortnite Chapter 6 Season 2",
+    image: "https://cdn2.unrealengine.com/fortnite-battle-royale-lawless-1920x1080-b0238e935681.jpg",
+    cost: 0,
+    requiresCode: false,
+    type: "image"
+  },
+  {
+    id: 19,
+    name: "Fortnite Chapter 6 Season 3",
+    image: "https://www.gamespot.com/a/uploads/scale_super/1757/17577455/4508449-fortnitesupermanbattlepass.jpg",
     cost: 0,
     requiresCode: false,
     type: "image"
@@ -889,10 +1002,10 @@ const wallpapersShop = [
     realMoneyCost: "$10",
     type: "image"
   },*/
-  /*{
+  {
     id: 4,
     name: "Fortnite OG Season 1",
-    image: "fortniteog1.jpeg",
+    image: "https://img.asmedia.epimg.net/resizer/v2/XYTBWURM2NHAJK3OV3M4T2CY64.jpg?auth=63fb5a1762328070fff454b250bf019e63a43d59007af967f9ee3e4553666c42&width=644&height=362&smart=true",
     cost: 50,
     requiresCode: false,
     type: "image"
@@ -900,8 +1013,24 @@ const wallpapersShop = [
   {
     id: 5,
     name: "Fortnite OG Season 2",
-    image: "fortniteog2.jpeg",
+    image: "https://cdn2.unrealengine.com/fortnite-og-chapter-1-season-2-1920x1080-1a031fc0824b.jpg",
     cost: 50,
+    requiresCode: false,
+    type: "image"
+  },
+  {
+    id: 16,
+    name: "Fortnite OG Season 3",
+    image: "https://static.toiimg.com/thumb/msid-119818467,width-1280,height-720,imgsize-2235952,resizemode-6,overlay-toi_sw,pt-32,y_pad-40/photo.jpg",
+    cost: 50,
+    requiresCode: false,
+    type: "image"
+  },
+  {
+    id: 17,
+    name: "Fortnite OG Season 4",
+    image: "https://cdn2.unrealengine.com/en-fnfig-36-00-c1s4-egs-launcher-keyart-og-blade-2560x1440-2560x1440-584bcfc7226a.jpg",
+    cost: 75,
     requiresCode: false,
     type: "image"
   },
@@ -912,7 +1041,7 @@ const wallpapersShop = [
     cost: 25,
     requiresCode: false,
     type: "image"
-  },*/
+  },
   {
     id: 7,
     name: "MINI BOX PVP",
@@ -937,6 +1066,13 @@ const wallpapersShop = [
     id: 13,
     name: "Fishstick",
     image: "fishstick.jpeg",
+    cost: 75,
+    type: "image"
+  },
+  {
+    id: 15,
+    name: "Roblox Cave Account",
+    image: "roblox-cool.jpeg",
     cost: 75,
     type: "image"
   },
@@ -973,12 +1109,31 @@ const wallpapersShop = [
     type: "video"
   },
   {
+    id: 14,
+    name: "Animated Girl",
+    image: "anim.mp4", // path to your MP4 video file
+    cost: 250,
+    requiresCode: false,
+    type: "video"
+  },
+  {
     id: 10,
     name: "Animated Reaper",
     image: "bush.mp4", // path to your MP4 video file
     cost: null,
     requiresCode: true,
     code: "ANI-BUSH",
+    realMoneyCost: "$15",
+    type: "video"
+  },
+  
+  {
+    id: 12,
+    name: "Animated Grind Rail",
+    image: "platform.mp4", // path to your MP4 video file
+    cost: null,
+    requiresCode: true,
+    code: "ANI-GRI",
     realMoneyCost: "$15",
     type: "video"
   },
@@ -990,6 +1145,17 @@ const wallpapersShop = [
     requiresCode: true,
     code: "ANI-MAD",
     realMoneyCost: "$15",
+    type: "video"
+  },
+  
+  {
+    id: 13,
+    name: "Animated Roblox Moon Landing",
+    image: "moon.mp4", // path to your MP4 video file
+    cost: null,
+    requiresCode: true,
+    code: "ANI-MOON",
+    realMoneyCost: "$10",
     type: "video"
   }
 ];

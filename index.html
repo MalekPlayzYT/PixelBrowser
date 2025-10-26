@@ -3,24 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gaming Search Hub</title>
+  <title>Pixel Browser</title>
   <link rel="icon" href="iconc.png" type="image/x-icon">
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="//code.tidio.co/jsm5jk3ipporqdubmtlnzgei1ulccs4a.js" async></script>
 <style>
-  /* Style for the clock container */
   #clock {
-      position: fixed;      /* Stay fixed on the screen */
-      left: 10px;           /* 10px from the left edge */
-      bottom: 10px;         /* 10px from the bottom edge */
-      background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
-      padding: 5px 10px;    /* Some padding */
-      border-radius: 5px;   /* Rounded corners */
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-      font-size: 16px;      /* Adjust the size of the clock text */
-      color: #333;          /* Text color */
-    }
+  position: fixed; /* Stays on screen */
+  left: 20px;
+  bottom: 20px;
+  background: rgba(255, 255, 255, 0.1); /* Softer glassmorphism */
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  backdrop-filter: blur(6px); /* Add blur for glass effect */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  font-size: 18px;
+  color: var(--text);
+  letter-spacing: 1px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease, background 0.3s ease;
+  animation: clockFloat 6s ease-in-out infinite alternate;
+}
+
+@keyframes clockFloat {
+  from { transform: translateY(0); }
+  to { transform: translateY(-5px); }
+}
+
+#clock:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px) scale(1.02);
+}
+
   /* ====================================================
      Custom Properties for Modern & Blurred Overlays
   ===================================================== */
@@ -128,27 +143,53 @@
   .top-btnn i {
     font-size: 1.2rem;
   }
-  #pointsDisplay {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    font-size: 1.2rem;
-    padding: 8px 12px;
-    background-color: rgba(0, 0, 0, 0.75);
-    border-radius: var(--radius);
-  }
+:root {
+  --pts-top: 1rem;
+  --pts-left: 1rem;
+  --pts-pad-y: 0.5rem;
+  --pts-pad-x: 1rem;
+  --pts-radius: 0.75rem;
+  --pts-font-size: 1.2rem;
+  --pts-bg: rgba(255, 255, 255, 0.15);
+  --pts-border: rgba(255, 255, 255, 0.4);
+  --pts-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
 
-  @keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
+#pointsDisplay {
+  position: absolute;
+  top: var(--pts-top);
+  left: var(--pts-left);
+  padding: var(--pts-pad-y) var(--pts-pad-x);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: var(--pts-font-size);
+  color: #fff;
+
+  /* glassmorphic backdrop */
+  background: var(--pts-bg);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  border: 1px solid var(--pts-border);
+  border-radius: var(--pts-radius);
+  box-shadow: var(--pts-shadow);
+
+  /* entrance animation */
+  opacity: 0;
+  animation: fadeIn 0.4s ease-out forwards;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
   }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
+
 
   /* ----------------------------
      Main Container (Non‑Modal Pages)
@@ -355,43 +396,47 @@
 .background-previews,
 .owned-wallpapers {
   display: flex;
-  flex-direction: row;         /* Arrange items horizontally */
-  align-items: flex-start;      /* Adjust vertical alignment as needed */
-  gap: 15px;                   /* Space between items */
-  overflow-x: auto;            /* Allow horizontal scrolling */
-  overflow-y: hidden;          /* Hide any vertical overflow */
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 15px;
+  overflow-x: auto;
+  overflow-y: hidden;
   width: 100%;
   padding: 10px 0;
+  scroll-behavior: smooth;
 }
 
 .background-preview,
 .owned-wallpaper {
-  flex: 0 0 auto;              /* Prevent items from shrinking */
-  width: 200px;                /* Fixed width for each background item */
-  border-radius: var(--radius);
+  flex: 0 0 auto;
+  width: 200px;
+  border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
-  transition: transform var(--transition), opacity var(--transition);
-  background: var(--card-bg);
+  background: #1e1e2f;
   text-align: center;
-  padding: 5px;
+  padding: 10px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .background-preview img,
 .owned-wallpaper img {
   width: 100%;
-  height: 120px;               /* Fixed height for images */
+  height: 120px;
   object-fit: cover;
-  border-radius: var(--radius);
+  border-radius: 8px;
 }
 
 .background-preview p,
 .owned-wallpaper p {
-  margin: 5px 0 0;
+  margin: 8px 0 0;
   font-size: 0.9rem;
+  color: white;
 }
 
-.background-preview span {
+.background-preview span,
+.owned-wallpaper span {
   display: block;
   font-size: 0.8rem;
   margin-top: 3px;
@@ -403,6 +448,8 @@
   transform: scale(1.05);
   opacity: 0.95;
 }
+
+
 
 
   /* ----------------------------
@@ -463,6 +510,516 @@
   .game-buttons button:hover {
     background: var(--primary-hover);
   }
+  :root {
+  --bg-gradient: linear-gradient(135deg, #2c3e50, #34495e);
+  --primary: #ffffff;
+  --primary-hover: rgba(255, 255, 255, 0.2);
+  --secondary: rgba(255, 255, 255, 0.1);
+  --text: #ecf0f1;
+  --radius: 12px;
+  --transition: 0.3s ease;
+  --modal-blur: 12px;
+  --font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font);
+  background: var(--bg-gradient);
+  background-size: cover;
+  background-attachment: fixed;
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.container, 
+.welcome-page,
+.modal-content,
+.game-modal-content {
+  background: var(--secondary);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  animation: floatGlass 8s ease-in-out infinite alternate;
+}
+
+@keyframes floatGlass {
+  from { transform: translateY(0); }
+  to { transform: translateY(-5px); }
+}
+
+button,
+.top-btn,
+.shortcut-btn,
+.game-buttons button {
+  background: var(--secondary);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  color: var(--text);
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+
+button:hover,
+.top-btn:hover,
+.shortcut-btn:hover,
+.game-buttons button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+#clock {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  background: var(--secondary);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius);
+  padding: 8px 16px;
+  font-size: 18px;
+  letter-spacing: 1px;
+  animation: clockFloat 6s ease-in-out infinite alternate;
+}
+
+@keyframes clockFloat {
+  from { transform: translateY(0); }
+  to { transform: translateY(-5px); }
+}
+
+.search-container {
+  background: var(--secondary);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius);
+  display: flex;
+  overflow: hidden;
+}
+
+.search-bar {
+  flex: 1;
+  padding: 14px 20px;
+  font-size: 1.2rem;
+  border: none;
+  background: transparent;
+  color: var(--text);
+}
+
+.search-bar::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.search-icon-btn {
+  background: transparent;
+  color: var(--text);
+  padding: 14px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.shortcut-btn,
+.top-btn {
+  padding: 10px 20px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(var(--modal-blur));
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content,
+.game-modal-content {
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+}
+
+.background-preview,
+.owned-wallpaper {
+  background: var(--secondary);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+.background-preview:hover,
+.owned-wallpaper:hover {
+  transform: scale(1.05);
+  opacity: 0.95;
+}
+
+.progress-bar-container {
+  background: rgba(255,255,255,0.1);
+}
+
+.progress-bar {
+  background: var(--primary);
+}
+
+footer {
+  margin-top: 40px;
+  font-size: 0.9em;
+  color: rgba(255,255,255,0.6);
+}
+:root {
+  --bg-gradient: linear-gradient(135deg, #2c3e50, #34495e);
+  --primary: #ffffff;
+  --primary-hover: rgba(255, 255, 255, 0.2);
+  --secondary: rgba(255, 255, 255, 0.1);
+  --text: #ecf0f1;
+  --radius: 12px;
+  --transition: 0.3s ease;
+  --modal-blur: 12px;
+  --font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font);
+  background: var(--bg-gradient);
+  background-size: cover;
+  background-attachment: fixed;
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+/* ----------------------------
+   Glass Panel Base Style
+----------------------------- */
+.glass-panel {
+  background: var(--secondary);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3), inset 0 0 10px rgba(255,255,255,0.05);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+/* ----------------------------
+   Search + Logo Section
+----------------------------- */
+.search-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-logo {
+  max-width: 150px;
+  height: auto;
+  opacity: 0.9;
+}
+
+.search-container {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  max-width: 800px;
+}
+
+.search-bar {
+  flex: 1;
+  padding: 14px 20px;
+  font-size: 1.2rem;
+  border: none;
+  background: transparent;
+  color: var(--text);
+}
+
+.search-bar::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.search-icon-btn {
+  background: transparent;
+  color: var(--text);
+  padding: 14px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+/* ----------------------------
+   Buttons
+----------------------------- */
+button,
+.top-btn,
+.shortcut-btn {
+  background: var(--secondary);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  color: var(--text);
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+
+button:hover,
+.top-btn:hover,
+.shortcut-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+/* ----------------------------
+   Containers / Modals / Cards
+----------------------------- */
+.container,
+.welcome-page,
+.modal-content,
+.game-modal-content {
+  background: var(--secondary);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3), inset 0 0 10px rgba(255,255,255,0.05);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(var(--modal-blur));
+  justify-content: center;
+  align-items: center;
+}
+
+/* ----------------------------
+   Clock
+----------------------------- */
+#clock {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  background: var(--secondary);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius);
+  padding: 8px 16px;
+  font-size: 18px;
+  letter-spacing: 1px;
+  animation: clockFloat 6s ease-in-out infinite alternate;
+}
+
+@keyframes clockFloat {
+  from { transform: translateY(0); }
+  to { transform: translateY(-5px); }
+}
+
+/* ----------------------------
+   Background Items (Wallpapers)
+----------------------------- */
+.background-preview,
+.owned-wallpaper {
+  background: var(--secondary);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+.background-preview:hover,
+.owned-wallpaper:hover {
+  transform: scale(1.05);
+  opacity: 0.95;
+}
+
+/* ----------------------------
+   Utility
+----------------------------- */
+footer {
+  margin-top: 40px;
+  font-size: 0.9em;
+  color: rgba(255,255,255,0.6);
+}
+
+/* browser.css - Combined UI for Browser, Clock, and Background Shop */
+
+/* ------------------------------------------------
+   Variables
+------------------------------------------------ */
+:root {
+  /* Base Colors */
+  --color-bg-gradient: linear-gradient(135deg, #2c3e50, #34495e);
+  --color-text: #ecf0f1;
+  --color-glass: rgba(255, 255, 255, 0.1);
+  --color-glass-hover: rgba(255, 255, 255, 0.2);
+  --color-border: rgba(255, 255, 255, 0.3);
+
+  /* Typography */
+  --font-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-size-base: 1rem;
+
+  /* Spacing & Sizing */
+  --radius: 12px;
+  --transition: 0.3s ease;
+  --blur-level: 12px;
+
+  /* Clock */
+  --clock-left: 1rem;
+  --clock-bottom: 1rem;
+  --clock-padding: 0.5rem 1rem;
+  --clock-font-size: 1.125rem;
+  --clock-float-dist: 6px;
+  --clock-float-duration: 6s;
+}
+
+/* ------------------------------------------------
+   Global & Body
+------------------------------------------------ */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-base);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  background: var(--color-bg-gradient);
+  background-attachment: fixed;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  flex-direction: column;
+  transition: background var(--transition);
+}
+
+/* ------------------------------------------------
+   Glass Panel Base Style
+------------------------------------------------ */
+.glass-panel {
+  background: var(--color-glass);
+  backdrop-filter: blur(var(--blur-level));
+  border: 1px solid var(--color-border);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3), inset 0 0 10px rgba(255,255,255,0.05);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: background var(--transition), transform var(--transition);
+}
+.glass-panel:hover {
+  background: var(--color-glass-hover);
+  transform: translateY(-2px);
+}
+
+/* ------------------------------------------------
+   Clock Widget
+------------------------------------------------ */
+#clock {
+  position: fixed;
+  left: var(--clock-left);
+  bottom: var(--clock-bottom);
+  padding: var(--clock-padding);
+  font-size: var(--clock-font-size);
+  letter-spacing: 1px;
+  color: var(--color-text);
+  background: var(--color-glass);
+  backdrop-filter: blur(var(--blur-level));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  animation: clockFloat var(--clock-float-duration) ease-in-out infinite alternate;
+  transition: background var(--transition), transform var(--transition);
+  z-index: 1000;
+  pointer-events: none;
+}
+#clock:hover {
+  background: var(--color-glass-hover);
+  transform: translateY(-2px) scale(1.02);
+}
+@keyframes clockFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-var(--clock-float-dist)); }
+}
+
+/* ------------------------------------------------
+   Background Shop
+------------------------------------------------ */
+.background-previews,
+.owned-wallpapers {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding: 10px 0;
+  scroll-behavior: smooth;
+}
+.background-preview,
+.owned-wallpaper {
+  flex: 0 0 200px;
+  background: var(--color-glass);
+  backdrop-filter: blur(var(--blur-level));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  padding: 10px;
+  transition: transform var(--transition), opacity var(--transition);
+}
+.background-preview img,
+.owned-wallpaper img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: calc(var(--radius) / 1.5);
+}
+.background-preview p,
+.owned-wallpaper p {
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+}
+.background-preview:hover,
+.owned-wallpaper:hover {
+  transform: scale(1.05);
+  opacity: 0.95;
+}
+
+/* ------------------------------------------------
+   Utility (Footer, etc.)
+------------------------------------------------ */
+footer {
+  margin-top: 40px;
+  font-size: 0.9em;
+  color: rgba(255,255,255,0.6);
+}
+
+
+
 </style>
 
 </style>
@@ -476,7 +1033,7 @@
 
    
   <div class="top-buttons">
-    <button class="top-btnn" onclick="location.assign('game2.html');">
+    <button class="top-btnn" onclick="location.assign('https://www.chatbase.co/4sWxnxKFrcvMhR7xGFnA3/help');">
       <i class="fa-solid fa-compass"></i></i> Pixel AI
     </button>
     
@@ -490,6 +1047,12 @@
 
   <!-- Points Display -->
   <div id="pointsDisplay">Points: 0</div>
+<!--Logo-->
+  <div class="search-wrapper">
+    <!--<img src="iconc.png" alt="Pixel Browser Logo" class="search-logo">-->
+    <h3 class="search-logo">Pixel Browser</h3>
+  </div>
+  
 
   <!-- Main Content -->
   <div class="c">
@@ -527,81 +1090,30 @@
   
         <!-- GTA -->
         <div class="news-item">
-          <img src="gtalogo.png" alt="GTA News">
-          <p>GTA VI: Official release date set for May 26, 2026 on PS5 & Xbox Series X/S.</p>
-        </div>
-        <div class="news-item">
-          <img src="gtalogo.png" alt="GTA News">
-          <p>GTA Online “Money Fronts” update arrives June 17 2025—introduces laundering businesses, new vehicles, & QoL perks.</p>
-        </div>
-  
-        <!-- Fortnite -->
-        <div class="news-item">
-          <img src="fortlogo.png" alt="Fortnite News">
-          <p>Fortnite Chapter 6 Season 3 “Super” launched June 8 2025 with Hero Rank progression, new powers & Utopia City map.</p>
-        </div>
-        <div class="news-item">
-          <img src="fortlogo.png" alt="Fortnite News">
-          <p>Fortnite now supports Nintendo Switch 2 at 60 FPS/2176×1224 docked, with Joy-Con gyro controls & replay mode.</p>
-        </div>
-        <div class="news-item">
-          <img src="fortlogo.png" alt="Fortnite News">
-          <p>Fortnite introduces digital gift cards for V-Bucks purchases across platforms (launched June 4 2025).</p>
-        </div>
-  
-        <!-- Roblox -->
-        <div class="news-item">
-          <img src="rologo.png" alt="Roblox News">
-          <p>Roblox beta: Analytics Assistant gives weekly/monthly DAU reports; Studio adds bone & FACS animation APIs.</p>
-        </div>
-        <div class="news-item">
-          <img src="rologo.png" alt="Roblox News">
-          <p>Roblox rolling out Regional Pricing and updated Terms of Use June 2025 (UK Online Safety Act compliance, IP rules).</p>
-        </div>
-  
-        <!-- PlayStation -->
-        <div class="news-item">
-          <img src="pslogo.png" alt="PlayStation News">
-          <p>PlayStation State of Play (June 4 2025): Revealed MARVEL Tōkon, Nioh 3 demo, Metal Gear Solid Δ release on Aug 28.</p>
+          <img src="xboxlogo.png" alt="Xbox News">
+          <p>The Elder Scrolls IV: Oblivion Remastered gets a physical Deluxe Edition launching Oct 13 2025 for PS5 & Xbox Series X/S — includes artbook, digital soundtrack & enhanced visuals. :contentReference[oaicite:1]{index=1}</p>
         </div>
         <div class="news-item">
           <img src="pslogo.png" alt="PlayStation News">
-          <p>PS5 firmware v25.04 (June 4 2025) improves messaging UI & link filtering; multi-device DualSense pairing teased.</p>
-        </div>
-  
-        <!-- Xbox -->
-        <div class="news-item">
-          <img src="xboxlogo.png" alt="Xbox News">
-          <p>Xbox Games Showcase (June 8 2025): ASUS ROG Xbox Ally handhelds announced; Call of Duty: Black Ops 7 teased.</p>
+          <p>Ghost of Yōtei, the new open-world samurai action from Sucker Punch Productions, launches Oct 2 2025 on PS5 — a bold move ahead of major competitor drops. :contentReference[oaicite:4]{index=4}</p>
         </div>
         <div class="news-item">
-          <img src="xboxlogo.png" alt="Xbox News">
-          <p>Game Pass additions: EA Sports FC 25 (June 12), The Alters & FBC: Firebreak launching day-one.</p>
-        </div>
-  
-        <!-- Blooket -->
-        <div class="news-item">
-          <img src="blooketlogo.webp" alt="Blooket News">
-          <p>Blooket “Coco Cabana” team mode & “Plushie Panic” arcade mode live May 2025; next “Snake Escape” coming this fall.</p>
+          <img src="fortlogo.png" alt="Fortnite News">
+          <p>Arc Raiders, a sci-fi extraction shooter from Embark Studios, officially set to release Oct 30 2025 on PC & consoles. :contentReference[oaicite:7]{index=7}</p>
         </div>
         <div class="news-item">
-          <img src="blooketlogo.webp" alt="Blooket News">
-          <p>Blooket UI update (May 14 2025): Redesigned Blooks page with collection scores & bulk-sell safeguards.</p>
-        </div>
-  
-        <!-- YouTube -->
-        <div class="news-item">
-          <img src="youtubelogo.webp" alt="YouTube News">
-          <p>YouTube mobile app gets resizable miniplayer, Collaborative Playlists with AI thumbnails & Sleep Timer feature.</p>
+          <img src="gtalogo.png" alt="GTA News">
+          <p>Wu‑Tang Clan are making a return to video games with the co-op action RPG Wu‑Tang: Rise of the Deceiver — announced at Summer Game Fest 2025; platforms & final date TBA. :contentReference[oaicite:10]{index=10}</p>
         </div>
         <div class="news-item">
           <img src="youtubelogo.webp" alt="YouTube News">
-          <p>YouTube policy change June 2025: Moderation guidelines loosened for public-interest content; higher non-compliance threshold.</p>
+          <p>Elon Musk outlines ambitious goals: his xAI studio plans to release a “great” AI-generated video game and a fully watchable AI-made movie by end-of-2026. :contentReference[oaicite:13]{index=13}</p>
         </div>
         <div class="news-item">
-          <img src="iconc.png" alt="Pixel Browser News">
-          <p>New Pixel AI and Pixel AI Pro Shine</p>
+          <img src="iconc.png" alt="PB News">
+          <p>New Pixel AI</p>
         </div>
+        
   
       </div>
       <button onclick="closeNewsSection()">Close</button>
